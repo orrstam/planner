@@ -7,14 +7,12 @@ interface ILoaderProps {
 }
 
 const Loading: React.StatelessComponent<ILoaderProps> = (props) => {
-  if (props.pastDelay) {
-    console.log('past deleay');
-    return(
-      <div>Loading...</div>
-    )
+  if (props.error) {
+    console.log('Error');
+    return <div>Loading...</div>
   } else {
-    console.log(props);
-    return(<h1>It has working</h1>);
+    console.log('loading');
+    return <div>Loading...</div>
   }
 };
 

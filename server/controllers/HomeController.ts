@@ -1,13 +1,16 @@
 import { Request, Response, NextFunction } from 'express';
 import { IController } from '../types/interfaces';
+import Task from '../Models/Task';
 
 class HomeController implements IController {
-  get(req: Request, res: Response, next: NextFunction): any {
-    res.send({ message: 'Hello from API' });
+  async get(req: Request, res: Response, next: NextFunction): Promise<any> {
+    const tasks = await Task.find();
+    res.send(tasks);
   }
 
-  timeout(req: Request, res: Response, next: NextFunction): any {
-    setTimeout(() => { next(); }, 7000);
+  async create(req: Request, res: Response): Promise<any> {
+    const task = await (new Task( req.body )).save();
+    res.send(task);
   }
 }
 

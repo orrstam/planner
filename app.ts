@@ -10,12 +10,14 @@ class App {
   constructor() {
     this.app = express();
     this.app.use(cors({ origin: 'http://localhost:3000' }));
+    this.config();
     this.routes();
   }
 
   private config(): void {
     this.app.use(bodyParser.json());
     this.app.use(bodyParser.urlencoded({ extended: true }));
+
     dotenv.config({ path: '.env' });
   }
 

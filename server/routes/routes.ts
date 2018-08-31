@@ -1,5 +1,4 @@
 import * as express from 'express';
-import { Request, Response, NextFunction } from 'express';
 import HomeController from '../controllers/HomeController'
 
 class Routes {
@@ -11,7 +10,8 @@ class Routes {
   }
 
   setupRoutes(): void {
-    this.router.get('/api/v1', HomeController.timeout, HomeController.get);
+    this.router.get('/api/v1', HomeController.get);
+    this.router.post('/api/v1', HomeController.create);
   }
 }
 

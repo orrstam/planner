@@ -6,23 +6,18 @@ import Loader from './components/Loader';
 const Landing = Loadable({
   loader: () => import('./views/Landing'),
   loading: Loader,
-  delay: 1000
+  delay: 200
 });
 
-export default class App extends React.Component<any, any> {
-
-  public componentDidMount(): void {
-    // 
-  }
-
+export default class App extends React.Component<{}, {}> {
   public render() {
     return (
       <div>
         <header>
-          <h1>Hello, yes this is APP</h1>
+          <h1>Planner</h1>
         </header>
         <Switch>
-          <Route path="/" component={Landing} />
+          <Route exact={true} path="/" component={Landing} />
         </Switch>
       </div>
     );
