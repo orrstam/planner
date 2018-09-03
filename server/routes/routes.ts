@@ -12,6 +12,7 @@ class Routes {
   setupRoutes(): void {
     this.router.get('/api/v1', HomeController.get);
     this.router.post('/api/v1', HomeController.create);
+    this.router.delete('/api/v1', HomeController.delete);
   }
 }
 

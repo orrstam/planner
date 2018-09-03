@@ -12,6 +12,16 @@ class HomeController implements IController {
     const task = await (new Task( req.body )).save();
     res.send(task);
   }
+
+  async delete(req: Request, res: Response): Promise<any> {
+    try {
+      const id = req.body.id;
+      const task = await Task.remove({ _id: id });
+      res.send(task);
+    } catch (error) {
+      // Handle error
+    }
+  }
 }
 
 export default new HomeController;
