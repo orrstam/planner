@@ -5,6 +5,24 @@ import TaskStore from '../stores/TaskStore';
 import { inject } from 'mobx-react';
 
 const Wrapper = styled.div``;
+const InputWrap = styled.div`
+  margin-bottom: 15px;
+`;
+
+const Input = styled.input`
+  padding-left: 5px;
+  font-size: 14px;
+`;
+const Textarea = styled.textarea`
+  padding-left: 5px;
+  font-size: 14px;
+`;
+
+const Button = styled.button`
+  border: 1px solid #ccc;
+  padding: 10px 15px;
+  border-radius: 0;
+`;
 
 export interface IAddTaskFormSubmitValues {
   title: string,
@@ -56,20 +74,19 @@ export default class AddTaskForm extends React.Component<IAddTaskFormProps> {
           <Form onSubmit={handleSubmit}>
             <Field name="title">
               {({field, form}) => (
-                <div>
-                  <input type="text" {...field} placeholder="Title"/> { form.touched.title && form.errors.title }
-                </div>
+                <InputWrap>
+                  <Input type="text" {...field} placeholder="Title"/> { form.touched.title && form.errors.title }
+                </InputWrap>
               )}
             </Field>
             <Field name="text">
               {({field, form}) => (
-                <div>
-                  <textarea {...field} rows={10} cols={40} placeholder="Text">{}</textarea>{ form.touched.text && form.errors.text }
-                  {/* <input style={} type="textarea" {...field} placeholder="Text"/> { form.touched.text && form.errors.text } */}
-                </div>
+                <InputWrap>
+                  <Textarea {...field} rows={10} cols={40} placeholder="Text">{}</Textarea>{ form.touched.text && form.errors.text }
+                </InputWrap>
               )}
             </Field>
-            <button type="submit">Submit</button>
+            <Button type="submit">Submit</Button>
           </Form>
         )}
         </Formik>

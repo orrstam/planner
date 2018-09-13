@@ -9,12 +9,28 @@ export default class TaskStore {
     this.taskList.push(task);
   }
 
+  @action
+  public removeTask(id: string): void {
+    this.taskList = this.taskList.filter(task => task._id !== id);
+  }
+
   async createTask(task: Planner.Tasks.Task): Promise<any> {
     try {
       const response = await api.post('/', task);
       this.addTask(response.data);
     } catch (error) {
       return Promise.reject(error);
+    }
+  }
+
+  async deleteTask(id: string): Promise<any> {
+    try {
+      const response = await api.delete('/', { data: { id } });
+      this.removeTask(id);
+
+      return response;
+    } catch (responseError) {
+      console.log(responseError);
     }
   }
 

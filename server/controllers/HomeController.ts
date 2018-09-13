@@ -16,7 +16,7 @@ class HomeController implements IController {
   async delete(req: Request, res: Response): Promise<any> {
     try {
       const id = req.body.id;
-      const task = await Task.remove({ _id: id });
+      const task = await Task.delete({ _id: id });
       res.send(task);
     } catch (error) {
       // Handle error
