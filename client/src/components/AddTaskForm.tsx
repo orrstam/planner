@@ -13,6 +13,7 @@ const Input = styled.input`
   padding-left: 5px;
   font-size: 14px;
 `;
+
 const Textarea = styled.textarea`
   padding-left: 5px;
   font-size: 14px;
@@ -38,15 +39,18 @@ export interface IAddTaskFormProps {
 export default class AddTaskForm extends React.Component<IAddTaskFormProps> {
   handleSubmit = async (
     data: IAddTaskFormSubmitValues,
-    { setSubmitting, setErrors }: FormikActions<IAddTaskFormSubmitValues>
+    { setSubmitting, setErrors, resetForm }: FormikActions<IAddTaskFormSubmitValues>
   ) => {
       setSubmitting(true);
       const response = await this.props.taskStore!.createTask(data);
-      setSubmitting(false);
 
       if (response && response.error) {
         setErrors(response.error);
+      } else {
+        resetForm();
       }
+
+      setSubmitting(false);
   };
 
   validate(values: IAddTaskFormSubmitValues) {
@@ -70,7 +74,7 @@ export default class AddTaskForm extends React.Component<IAddTaskFormProps> {
     return(
       <Wrapper>
         <Formik onSubmit={this.handleSubmit} initialValues={initialValues} validate={this.validate}>
-        {({ handleSubmit }) => (
+        {({ handleSubmit, isSubmitting }) => (
           <Form onSubmit={handleSubmit}>
             <Field name="title">
               {({field, form}) => (
@@ -86,7 +90,7 @@ export default class AddTaskForm extends React.Component<IAddTaskFormProps> {
                 </InputWrap>
               )}
             </Field>
-            <Button type="submit">Submit</Button>
+            <Button disabled={isSubmitting}>Submit</Button>
           </Form>
         )}
         </Formik>
