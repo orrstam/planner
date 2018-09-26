@@ -9,6 +9,12 @@ const Landing = Loadable({
   delay: 200
 });
 
+const RemovedItems = Loadable({
+  loader: () => import('./views/RemovedItems'),
+  loading: Loader,
+  delay: 200
+});
+
 export default class App extends React.Component<{}, {}> {
   public render() {
     return (
@@ -18,6 +24,7 @@ export default class App extends React.Component<{}, {}> {
         </header>
         <Switch>
           <Route exact={true} path="/" component={Landing} />
+          <Route exact={true} path="/removed-tasks" component={RemovedItems} />
         </Switch>
       </div>
     );
