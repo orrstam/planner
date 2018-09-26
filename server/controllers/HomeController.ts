@@ -8,6 +8,11 @@ class HomeController implements IController {
     res.send(tasks);
   }
 
+  async getDeleted(req: Request, res: Response, next: NextFunction): Promise<any> {
+    const tasks = await Task.findDeleted();
+    res.send(tasks);
+  }
+
   async create(req: Request, res: Response): Promise<any> {
     const task = await (new Task( req.body )).save();
     res.send(task);
@@ -17,6 +22,16 @@ class HomeController implements IController {
     try {
       const id = req.body.id;
       const task = await Task.delete({ _id: id });
+      res.send(task);
+    } catch (error) {
+      // Handle error
+    }
+  }
+
+  async restore(req: Request, res: Response): Promise<any> {
+    try {
+      const id = req.body.id;
+      const task = await Task.restore({ _id: id });
       res.send(task);
     } catch (error) {
       // Handle error
