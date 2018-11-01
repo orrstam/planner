@@ -4,6 +4,8 @@ import { Provider } from 'mobx-react';
 import App from './App';
 import { BrowserRouter } from 'react-router-dom';
 import registerServiceWorker from './registerServiceWorker';
+import { ThemeProvider } from 'styled-components';
+import theme from './config/theme';
 
 import {
   taskStore
@@ -16,7 +18,9 @@ const stores = {
 ReactDOM.render(
   <BrowserRouter>
     <Provider {...stores}>
-      <App />
+      <ThemeProvider theme={theme}>
+        <App />
+      </ThemeProvider>
     </Provider>
   </BrowserRouter>,
   document.getElementById('root') as HTMLElement
