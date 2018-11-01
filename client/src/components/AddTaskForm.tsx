@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import { Formik, Form, Field, FormikActions, FormikErrors } from 'formik';
 import TaskStore from '../stores/TaskStore';
 import { inject } from 'mobx-react';
+import { Box } from './layout';
 
-const Wrapper = styled.div``;
 const InputWrap = styled.div`
   margin-bottom: 15px;
 `;
@@ -72,7 +72,7 @@ export default class AddTaskForm extends React.Component<IAddTaskFormProps> {
     };
 
     return(
-      <Wrapper>
+      <Box mb="25px">
         <Formik onSubmit={this.handleSubmit} initialValues={initialValues} validate={this.validate}>
         {({ handleSubmit, isSubmitting }) => (
           <Form onSubmit={handleSubmit}>
@@ -94,7 +94,7 @@ export default class AddTaskForm extends React.Component<IAddTaskFormProps> {
           </Form>
         )}
         </Formik>
-      </Wrapper>
+      </Box>
     )
   }
 }

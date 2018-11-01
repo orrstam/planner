@@ -1,10 +1,8 @@
 import * as React from 'react';
-import styled from 'styled-components';
+import { Box } from './layout/'
 import AddTaskForm from './AddTaskForm';
 import TaskItem from './TaskItem';
 import * as TaskStore from '../stores/TaskStore';
-
-const Wrapper = styled.div``;
 
 interface ITaskListProps {
   tasks: Planner.Tasks.Task[]
@@ -17,7 +15,7 @@ const TasksList: React.StatelessComponent<ITaskListProps> = ({
   const { taskStore } = TaskStore;
 
   return (
-    <Wrapper>
+    <Box>
       <AddTaskForm />
       { tasks.map((task, key) => {
 
@@ -37,7 +35,7 @@ const TasksList: React.StatelessComponent<ITaskListProps> = ({
           <TaskItem key={key} task={task} icons={[ trashIcon ]} />
         )
       }) }
-    </Wrapper>
+    </Box>
   )
 }
 
