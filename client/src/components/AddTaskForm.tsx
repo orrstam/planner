@@ -1,45 +1,18 @@
 import * as React from 'react';
-import styled from 'styled-components';
-import { Formik, Form, Field, FormikActions, FormikErrors } from 'formik';
+import { FormikActions, FormikErrors } from 'formik';
 import TaskStore from '../stores/TaskStore';
 import { inject } from 'mobx-react';
-import { Box } from './layout';
-
-const InputWrap = styled.div`
-  margin-bottom: 15px;
-`;
-
-const Input = styled.input`
-  padding-left: 5px;
-  font-size: 14px;
-`;
-
-const Textarea = styled.textarea`
-  padding-left: 5px;
-  font-size: 14px;
-`;
-
-const Button = styled.button`
-  border: 1px solid #ccc;
-  padding: 10px 15px;
-  border-radius: 0;
-`;
-
-export interface IAddTaskFormSubmitValues {
-  title: string,
-  text: string
-}
+import TaskForm from '../components/TaskForm';
 
 export interface IAddTaskFormProps {
   taskStore?: TaskStore,
-  onSubmit?: (e: IAddTaskFormSubmitValues) => Promise<any>,
 }
 
 @inject('taskStore')
 export default class AddTaskForm extends React.Component<IAddTaskFormProps> {
   handleSubmit = async (
-    data: IAddTaskFormSubmitValues,
-    { setSubmitting, setErrors, resetForm }: FormikActions<IAddTaskFormSubmitValues>
+    data: Planner.Tasks.Forms.SubmitValues,
+    { setSubmitting, setErrors, resetForm }: FormikActions<Planner.Tasks.Forms.SubmitValues>
   ) => {
       setSubmitting(true);
       const response = await this.props.taskStore!.createTask(data);
@@ -53,7 +26,7 @@ export default class AddTaskForm extends React.Component<IAddTaskFormProps> {
       setSubmitting(false);
   };
 
-  validate(values: IAddTaskFormSubmitValues) {
+  validate(values: Planner.Tasks.Forms.SubmitValues) {
     let errors: FormikErrors<any> = {};
 
     Object.keys(values).forEach(key => {
@@ -66,35 +39,13 @@ export default class AddTaskForm extends React.Component<IAddTaskFormProps> {
   }
 
   public render() {
-    const initialValues: IAddTaskFormSubmitValues = {
+    const initialValues: Planner.Tasks.Forms.SubmitValues = {
       title: '',
       text: ''
     };
 
-    return(
-      <Box mb="25px">
-        <Formik onSubmit={this.handleSubmit} initialValues={initialValues} validate={this.validate}>
-        {({ handleSubmit, isSubmitting }) => (
-          <Form onSubmit={handleSubmit}>
-            <Field name="title">
-              {({field, form}) => (
-                <InputWrap>
-                  <Input type="text" {...field} placeholder="Title"/> { form.touched.title && form.errors.title }
-                </InputWrap>
-              )}
-            </Field>
-            <Field name="text">
-              {({field, form}) => (
-                <InputWrap>
-                  <Textarea {...field} rows={10} cols={40} placeholder="Text">{}</Textarea>{ form.touched.text && form.errors.text }
-                </InputWrap>
-              )}
-            </Field>
-            <Button disabled={isSubmitting}>Submit</Button>
-          </Form>
-        )}
-        </Formik>
-      </Box>
+    return (
+      <TaskForm initialValues={initialValues} handleSubmit={this.handleSubmit} validate={this.validate} />
     )
   }
 }
