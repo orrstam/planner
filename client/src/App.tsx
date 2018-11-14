@@ -33,7 +33,7 @@ const Header = () => {
 export default class App extends React.Component<{}, {}> {
   public render() {
     return (
-      <Flex height="100vh" bg="#fcfcfc" justifyContent="center">
+      <Flex bg="#fcfcfc" justifyContent="center">
         <Box width="40vw">
           <Header />
           <Switch>
