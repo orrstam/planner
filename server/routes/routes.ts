@@ -10,10 +10,11 @@ class Routes {
   }
 
   setupRoutes(): void {
-    this.router.get('/api/v1', HomeController.get);
-    this.router.get('/api/v1/deleted', HomeController.getDeleted);
     this.router.post('/api/v1', HomeController.create);
+    this.router.get('/api/v1', HomeController.get);
+    this.router.put('/api/v1', HomeController.update);
     this.router.delete('/api/v1', HomeController.delete);
+    this.router.get('/api/v1/deleted', HomeController.getDeleted);
     this.router.put('/api/v1/restore', HomeController.restore);
   }
 }

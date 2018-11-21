@@ -3,9 +3,24 @@ import { IController } from '../types/interfaces';
 import Task from '../Models/Task';
 
 class HomeController implements IController {
+  async create(req: Request, res: Response): Promise<any> {
+    const task = await (new Task( req.body )).save();
+    res.send(task);
+  }
+
   async get(req: Request, res: Response, next: NextFunction): Promise<any> {
     const tasks = await Task.find();
     res.send(tasks);
+  }
+
+  async update(req: Request, res: Response, next: NextFunction): Promise<any> {
+    try {
+      const task = await Task.findByIdAndUpdate(req.body._id, {$set: req.body}, { new: true });
+      res.send(task);
+    } catch (error) {
+        // Handle error
+        res.status(500).send(error);
+    }
   }
 
   async getDeleted(req: Request, res: Response, next: NextFunction): Promise<any> {
@@ -13,10 +28,6 @@ class HomeController implements IController {
     res.send(tasks);
   }
 
-  async create(req: Request, res: Response): Promise<any> {
-    const task = await (new Task( req.body )).save();
-    res.send(task);
-  }
 
   async delete(req: Request, res: Response): Promise<any> {
     try {
