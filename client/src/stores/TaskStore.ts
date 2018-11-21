@@ -6,8 +6,14 @@ export default class TaskStore {
   @observable fetchDeleted: boolean = false;
 
   @action
-  public addTask(task: Planner.Tasks.Task): void {
-    this.taskList.push(task);
+  public addOrUpdateTask(task: Planner.Tasks.Task): void {
+    const exists = this.taskList.findIndex(item => item._id === task._id);
+
+    if (exists >= 0) {
+      this.taskList.splice(exists, 1, task);
+    } else {
+      this.taskList.push(task);
+    }
   }
 
   @action
@@ -18,7 +24,7 @@ export default class TaskStore {
   async createTask(task: Planner.Tasks.Task): Promise<any> {
     try {
       const response = await api.post('/', task);
-      this.addTask(response.data);
+      this.addOrUpdateTask(response.data);
     } catch (error) {
       return Promise.reject(error);
     }
@@ -32,6 +38,19 @@ export default class TaskStore {
       return response;
     } catch (error) {
       return Promise.reject(error);
+    }
+  }
+
+  async updateTask(task: Planner.Tasks.Task): Promise<any> {
+    try {
+      const response = await api.put('/', task);
+
+      this.addOrUpdateTask(response.data);
+
+      return response;
+    } catch (error) {
+      console.log('Store Error', error);
+      return error;
     }
   }
 
@@ -51,7 +70,7 @@ export default class TaskStore {
 
     try {
       const data = await api.get(endpoint);
-      transaction(() => data.data.forEach((item: Planner.Tasks.Task) => this.addTask(item)));
+      transaction(() => data.data.forEach((item: Planner.Tasks.Task) => this.addOrUpdateTask(item)));
     } catch(error) {
       return Promise.reject(error);
     }
