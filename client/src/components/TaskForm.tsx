@@ -32,7 +32,7 @@ interface ITaskFormProps {
   edit?: boolean
 }
 
-const TasksForm: React.StatelessComponent<ITaskFormProps> = ({
+const TaskForm: React.StatelessComponent<ITaskFormProps> = ({
   handleSubmit,
   initialValues,
   validate,
@@ -66,4 +66,4 @@ const TasksForm: React.StatelessComponent<ITaskFormProps> = ({
   )
 }
 
-export default TasksForm;
+export default TaskForm;

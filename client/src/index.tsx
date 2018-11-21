@@ -8,11 +8,13 @@ import { ThemeProvider } from 'styled-components';
 import theme from './config/theme';
 
 import {
-  taskStore
+  taskStore,
+  modalStore
  } from './stores';
 
 const stores = {
-  taskStore
+  taskStore,
+  modalStore
 }
 
 ReactDOM.render(

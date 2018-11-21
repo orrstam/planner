@@ -3,19 +3,27 @@ import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faTrashAlt,
-  faUndo
+  faUndo,
+  faTimes,
+  faEdit
 } from '@fortawesome/free-solid-svg-icons';
 import { Icon, library, IconProp } from '@fortawesome/fontawesome-svg-core';
 library.add({
   faTrashAlt,
-  faUndo
+  faUndo,
+  faEdit,
+  faTimes
 });
 
-const IconWrapper = styled.div``;
+const IconWrapper = styled.div`
+  cursor: pointer;
+  display: inline-block;
+  margin-right: 5px;
+`;
 
 interface IIConProps {
   icon: IconProp,
-  onClick?: () => void
+  onClick?: (e: any) => void
 }
 
 const Icon: React.StatelessComponent<IIConProps> = ({
