@@ -10,3 +10,12 @@ declare namespace Planner.Tasks {
     onClick?: () => any
   }
 }
+
+declare namespace Planner.Tasks.Forms {
+  interface SubmitValues {
+    _id?: string,
+    title: string,
+    text: string
+  }
+}
+
