@@ -5,16 +5,16 @@ import { taskStore, modalStore } from '../stores';
 import TaskItem from './TaskItem';
 
 interface ITaskListProps {
-  tasks: Planner.Tasks.Task[]
+  tasks: Planner.Tasks.Task[],
+  types: Planner.TaskTypes.Type[]
 }
 
 const TasksList: React.StatelessComponent<ITaskListProps> = ({
-  tasks
+  tasks, types
 }) => {
-
   return (
     <Box>
-      <AddTaskForm />
+      <AddTaskForm types={types} />
       { tasks.map((task, key) => {
 
         const deleteTask = async () => {

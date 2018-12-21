@@ -16,9 +16,13 @@ export interface ITask extends Document{
 const taskSchema = new Schema({
   title: {
     type: String,
-    required: true 
+    required: true
   },
   text: String,
+  types: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Type'
+  }],
   created: {
     type: Date,
     default: Date.now

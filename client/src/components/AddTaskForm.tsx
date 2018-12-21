@@ -1,11 +1,13 @@
 import * as React from 'react';
 import { FormikActions, FormikErrors } from 'formik';
-import TaskStore from '../stores/TaskStore';
+import { TaskStore } from '../stores/';
 import { inject } from 'mobx-react';
 import TaskForm from '../components/TaskForm';
+import helpers from '../services/helpers';
 
 export interface IAddTaskFormProps {
   taskStore?: TaskStore,
+  types: Planner.TaskTypes.Type[],
 }
 
 @inject('taskStore')
@@ -13,8 +15,9 @@ export default class AddTaskForm extends React.Component<IAddTaskFormProps> {
   handleSubmit = async (
     data: Planner.Tasks.Forms.SubmitValues,
     { setSubmitting, setErrors, resetForm }: FormikActions<Planner.Tasks.Forms.SubmitValues>
-  ) => {
+    ) => {
       setSubmitting(true);
+
       const response = await this.props.taskStore!.createTask(data);
 
       if (response && response.error) {
@@ -22,9 +25,9 @@ export default class AddTaskForm extends React.Component<IAddTaskFormProps> {
       } else {
         resetForm();
       }
-
+      
       setSubmitting(false);
-  };
+    };
 
   validate(values: Planner.Tasks.Forms.SubmitValues) {
     let errors: FormikErrors<any> = {};
@@ -45,7 +48,12 @@ export default class AddTaskForm extends React.Component<IAddTaskFormProps> {
     };
 
     return (
-      <TaskForm initialValues={initialValues} handleSubmit={this.handleSubmit} validate={this.validate} />
+      <TaskForm 
+        initialValues={initialValues}
+        handleSubmit={this.handleSubmit}
+        validate={this.validate}
+        types={helpers.getOptionsFromTypes(this.props.types)}
+        />
     )
   }
 }

@@ -4,16 +4,17 @@ import { getWeek } from '../services/api';
 import * as moment from 'moment';
 import styled from 'styled-components';
 import TasksList from '../components/TasksList'
-import TaskStore from '../stores/TaskStore';
+import { TaskStore, TypeStore } from '../stores/';
 
 const Wrapper = styled.div``;
 
 interface LandingViewProps {
   taskStore?: TaskStore,
+  typeStore: TypeStore
   match: any
 }
 
-@inject('taskStore')
+@inject('taskStore', 'typeStore')
 @observer
 export default class Landing extends React.Component<LandingViewProps> {
   public componentDidMount(): void {
@@ -22,6 +23,7 @@ export default class Landing extends React.Component<LandingViewProps> {
 
   public initialFetch() {
     this.props.taskStore!.fetch();
+    this.props.typeStore.fetch();
   }
 
   public render() {
@@ -30,7 +32,7 @@ export default class Landing extends React.Component<LandingViewProps> {
     return (
       <Wrapper>
         <h2>Week: { getWeek(moment()) }</h2>
-        <TasksList tasks={tasks.slice()} />
+        <TasksList tasks={tasks.slice()} types={this.props.typeStore.types.slice()} />
       </Wrapper>
     )
   }

@@ -9,11 +9,13 @@ import theme from './config/theme';
 
 import {
   taskStore,
+  typeStore,
   modalStore
  } from './stores';
 
 const stores = {
   taskStore,
+  typeStore,
   modalStore
 }
 

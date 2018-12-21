@@ -1,5 +1,5 @@
 import * as express from 'express';
-import HomeController from '../controllers/HomeController'
+import { HomeController, TypesController } from '../controllers'
 
 class Routes {
   public router: express.Router
@@ -10,12 +10,16 @@ class Routes {
   }
 
   setupRoutes(): void {
+    // Home routes
     this.router.post('/api/v1', HomeController.create);
     this.router.get('/api/v1', HomeController.get);
     this.router.put('/api/v1', HomeController.update);
     this.router.delete('/api/v1', HomeController.delete);
     this.router.get('/api/v1/deleted', HomeController.getDeleted);
     this.router.put('/api/v1/restore', HomeController.restore);
+
+    // Type routes
+    this.router.get('/api/v1/types', TypesController.get);
   }
 }
 

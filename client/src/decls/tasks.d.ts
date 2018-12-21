@@ -15,7 +15,18 @@ declare namespace Planner.Tasks.Forms {
   interface SubmitValues {
     _id?: string,
     title: string,
-    text: string
+    text: string,
+    option?: any
+  }
+  interface Option {
+    value?: string,
+    label?: string
   }
 }
 
+declare namespace Planner.TaskTypes {
+  interface Type {
+    _id?: string,
+    name: string
+  }
+}
