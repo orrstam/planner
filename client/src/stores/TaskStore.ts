@@ -9,6 +9,7 @@ export default class TaskStore {
   public addOrUpdateTask(task: Planner.Tasks.Task): void {
     const exists = this.taskList.findIndex(item => item._id === task._id);
 
+    // @TODO: Sort tasks upon add/update
     if (exists >= 0) {
       this.taskList.splice(exists, 1, task);
     } else {

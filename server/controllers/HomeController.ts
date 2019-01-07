@@ -5,17 +5,25 @@ import Task from '../Models/Task';
 class HomeController implements IController {
   async create(req: Request, res: Response): Promise<any> {
     const task = await (new Task( req.body )).save();
-    res.send(task);
+    const populatedTask = await Task.findOne({_id: task._id}).populate('types');
+
+    res.send(populatedTask);
   }
 
   async get(req: Request, res: Response, next: NextFunction): Promise<any> {
-    const tasks = await Task.find();
+    const tasks = await Task.find()
+      .sort({'created': 'desc'})
+      .populate('types');
+
     res.send(tasks);
   }
 
   async update(req: Request, res: Response, next: NextFunction): Promise<any> {
     try {
-      const task = await Task.findByIdAndUpdate(req.body._id, {$set: req.body}, { new: true });
+      const task = await Task
+        .findByIdAndUpdate(req.body._id, {$set: req.body}, { new: true })
+        .populate('types');
+
       res.send(task);
     } catch (error) {
         // Handle error

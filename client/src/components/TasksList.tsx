@@ -1,20 +1,45 @@
 import * as React from 'react';
-import { Box } from './layout/'
+import { Box, Flex } from './layout/'
 import AddTaskForm from './AddTaskForm';
-import { taskStore, modalStore } from '../stores';
+import { taskStore, modalStore, uiStore } from '../stores';
 import TaskItem from './TaskItem';
+import Icon from './Icon';
+import { observer } from 'mobx-react';
 
 interface ITaskListProps {
   tasks: Planner.Tasks.Task[],
   types: Planner.TaskTypes.Type[]
 }
 
+const FormToggle: React.StatelessComponent = ({}) => {
+  const toggleForm = () => {
+    uiStore.setShowTaskForm();
+  }
+
+  return(
+    <Icon
+      onClick={toggleForm}
+      color="rgb(149, 195, 141, 0.75)"
+      size="2x"
+      icon={(!uiStore.showTaskForm) ? 'plus-circle' : 'minus-circle'}
+    />
+  );
+}
+
 const TasksList: React.StatelessComponent<ITaskListProps> = ({
-  tasks, types
+  tasks,
+  types
 }) => {
   return (
     <Box>
-      <AddTaskForm types={types} />
+      <Flex mb="20px" justifyContent="flex-end">
+        <FormToggle />
+      </Flex>
+
+      <Box style={ (!uiStore.showTaskForm) ? { display: 'none' } : {}}>
+        <AddTaskForm uiStore={uiStore} types={types} />
+      </Box>
+
       { tasks.map((task, key) => {
 
         const deleteTask = async () => {
@@ -40,11 +65,11 @@ const TasksList: React.StatelessComponent<ITaskListProps> = ({
         }
 
         return (
-          <TaskItem task={task} key={key} icons={[ trashIcon, EditIcon ]} />
+          <TaskItem types={types} task={task} key={key} icons={[ trashIcon, EditIcon ]} />
           )
         }) }
     </Box>
   )
 }
 
-export default TasksList;
+export default observer(TasksList);
