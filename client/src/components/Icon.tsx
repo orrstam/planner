@@ -7,7 +7,8 @@ import {
   faTimes,
   faEdit,
   faPlusCircle,
-  faMinusCircle
+  faMinusCircle,
+  faCheck
 } from '@fortawesome/free-solid-svg-icons';
 import { Icon, library, IconProp } from '@fortawesome/fontawesome-svg-core';
 library.add({
@@ -16,7 +17,8 @@ library.add({
   faEdit,
   faTimes,
   faPlusCircle,
-  faMinusCircle
+  faMinusCircle,
+  faCheck
 });
 
 const IconWrapper = styled.div`
