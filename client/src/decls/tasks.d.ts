@@ -3,6 +3,7 @@ declare namespace Planner.Tasks {
     _id?: string,
     title: string,
     text: string,
+    types: Planner.TaskTypes.Type[]
     deleted?: boolean
   }
   interface Icon {
@@ -16,7 +17,7 @@ declare namespace Planner.Tasks.Forms {
     _id?: string,
     title: string,
     text: string,
-    option?: any
+    types: any
   }
   interface Option {
     value?: string,
