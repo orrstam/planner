@@ -1,7 +1,5 @@
 import * as React from 'react';
 import { inject, observer } from 'mobx-react';
-import { getWeek } from '../services/api';
-import * as moment from 'moment';
 import styled from 'styled-components';
 import TasksList from '../components/TasksList'
 import { TaskStore, TypeStore } from '../stores/';
@@ -31,7 +29,6 @@ export default class Landing extends React.Component<LandingViewProps> {
 
     return (
       <Wrapper>
-        <h2>Week: { getWeek(moment()) }</h2>
         <TasksList tasks={tasks.slice()} types={this.props.typeStore.types.slice()} />
       </Wrapper>
     )
