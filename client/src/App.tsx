@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import Loader from './components/Loader';
 import { Flex, Box } from './components/layout';
 
+
 const Landing = Loadable({
   loader: () => import('./views/Landing'),
   loading: Loader,
@@ -18,30 +19,29 @@ const RemovedItems = Loadable({
 });
 
 const Header = () => {
-
   const Heading = styled.div`
     padding: 15px 0;
   `;
 
   return(
-    <Heading>
-      <h1>Planner</h1>
-    </Heading>
+    <Heading>Jonas</Heading>
   )
 }
 
 export default class App extends React.Component<{}, {}> {
   public render() {
     return (
-      <Flex bg="#fcfcfc" justifyContent="center">
-        <Box width="40vw">
-          <Header />
-          <Switch>
-            <Route exact={true} path="/" component={Landing} />
-            <Route exact={true} path="/removed-tasks" component={RemovedItems} />
-          </Switch>
-        </Box>
-      </Flex>
+      <Box pl="20px" bg="#fcfcfc">
+        <Header />
+        <Flex justifyContent="center" minHeight="100vh">
+          <Box width="40vw">
+            <Switch>
+              <Route exact={true} path="/" component={Landing} />
+              <Route exact={true} path="/removed-tasks" component={RemovedItems} />
+            </Switch>
+          </Box>
+        </Flex>
+      </Box>
     );
   }
 }
