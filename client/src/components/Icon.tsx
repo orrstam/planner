@@ -5,34 +5,42 @@ import {
   faTrashAlt,
   faUndo,
   faTimes,
-  faEdit
+  faEdit,
+  faPlusCircle,
+  faMinusCircle
 } from '@fortawesome/free-solid-svg-icons';
 import { Icon, library, IconProp } from '@fortawesome/fontawesome-svg-core';
 library.add({
   faTrashAlt,
   faUndo,
   faEdit,
-  faTimes
+  faTimes,
+  faPlusCircle,
+  faMinusCircle
 });
 
 const IconWrapper = styled.div`
   cursor: pointer;
   display: inline-block;
-  margin-right: 5px;
+  margin-left: 8px;
 `;
 
 interface IIConProps {
   icon: IconProp,
-  onClick?: (e: any) => void
+  onClick?: (e: any) => void,
+  size?: any,
+  color: string
 }
 
 const Icon: React.StatelessComponent<IIConProps> = ({
   icon,
-  onClick
+  onClick,
+  size,
+  color
 }) => {
   return (
     <IconWrapper onClick={onClick}>
-      <FontAwesomeIcon icon={icon} />
+      <FontAwesomeIcon size={(size) ? size : '1x'} style={{ color: color }} icon={icon} />
     </IconWrapper>
   )
 }
