@@ -1,13 +1,31 @@
 import * as React from 'react';
 import { inject, observer } from 'mobx-react';
 import styled from 'styled-components';
-import TasksList from '../components/TasksList'
-import { TaskStore, TypeStore } from '../stores/';
+import { TaskStore, TypeStore, uiStore } from '../stores/';
+import TasksList from '../components/TasksList';
+import Filter from '../components/Filter';
+import Flex from '../components/layout/Flex';
+import Icon from '../components/Icon';
+
+const FormToggle = observer(({}) => {
+  const toggleForm = () => {
+    uiStore.setShowTaskForm();
+  }
+
+  return(
+    <Icon
+      onClick={toggleForm}
+      color="rgb(149, 195, 141, 0.75)"
+      size="2x"
+      icon={(!uiStore.showTaskForm) ? 'plus-circle' : 'minus-circle'}
+    />
+  );
+})
 
 const Wrapper = styled.div``;
 
 interface LandingViewProps {
-  taskStore?: TaskStore,
+  taskStore: TaskStore,
   typeStore: TypeStore
   match: any
 }
@@ -29,7 +47,13 @@ export default class Landing extends React.Component<LandingViewProps> {
 
     return (
       <Wrapper>
-        <TasksList tasks={tasks.slice()} types={this.props.typeStore.types.slice()} />
+        <Filter taskStore={this.props.taskStore} types={this.props.typeStore.types.slice()} />
+        <Flex mb="20px" justifyContent="flex-end">
+          <FormToggle />
+        </Flex>
+        <TasksList
+          tasks={(this.props.taskStore.filters.length) ? this.props.taskStore.filteredTaskList : tasks.slice()}
+          types={this.props.typeStore.types.slice()} />
       </Wrapper>
     )
   }

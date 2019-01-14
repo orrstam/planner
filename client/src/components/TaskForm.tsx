@@ -105,7 +105,7 @@ class MySelect extends React.Component<IMSelectProps> {
       ...provided,
       color: state.isSelected ? 'rgba(149, 195, 141, 0.75)' : '#333',
       backgroundColor: state.isSelected ? '#fff' : '#fff'
-    }), 
+    }),
     control: (base: any, state: any) => ({
       ...base,
       padding: 5,

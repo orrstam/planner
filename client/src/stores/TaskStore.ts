@@ -3,18 +3,52 @@ import api from '../services/api';
 
 export default class TaskStore {
   @observable taskList: Planner.Tasks.Task[] = [];
+  @observable filteredTaskList: Planner.Tasks.Task[] = [];
+  @observable filters: Array<Planner.Tasks.Forms.Option> = [];
   @observable fetchDeleted: boolean = false;
 
   @action
   public addOrUpdateTask(task: Planner.Tasks.Task): void {
     const exists = this.taskList.findIndex(item => item._id === task._id);
 
-    // @TODO: Sort tasks upon add/update
     if (exists >= 0) {
       this.taskList.splice(exists, 1, task);
     } else {
       this.taskList.push(task);
     }
+
+    this.taskList = this.sort('created');
+  }
+
+  sort(key: string): Planner.Tasks.Task[] {
+    return this.taskList.sort((a: Planner.Tasks.Task, b: Planner.Tasks.Task): number => {
+      return ((a[key] > b[key]) ? -1 : ((a[key] < b[key]) ? 1 : 0));
+    });
+  }
+
+  @action
+  public filter(): void {
+    const filters = this.filters;
+
+    let filterValues: Array<string> = [];
+
+    for (let i: number = 0; i < filters.length; i++) {
+      if (filters[i].value) {
+        filterValues.push(filters[i].value);
+      }
+    }
+
+    const filteredTasks: Planner.Tasks.Task[] = [];
+
+    this.taskList.map(task => {
+      task.types.forEach(type => {
+        if (filterValues.indexOf(type._id) >= 0 ) {
+          filteredTasks.push(task);
+        }
+      });
+    });
+
+    this.filteredTaskList = filteredTasks;
   }
 
   @action
@@ -50,7 +84,6 @@ export default class TaskStore {
 
       return response;
     } catch (error) {
-      console.log('Store Error', error);
       return error;
     }
   }

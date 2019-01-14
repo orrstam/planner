@@ -5,9 +5,9 @@ const theme = {
   },
   taskTypes: {
     colors: {
-      'Home Improvement': '#E27D60',
-      'Development': '#41B3A3',
-      'Exercise': '#C38D9E'
+      'Home Improvement': '226,125,96',
+      'Development': '65,179,163',
+      'Exercise': '195,141,158'
     }
   }
 }

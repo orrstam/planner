@@ -4,7 +4,8 @@ declare namespace Planner.Tasks {
     title: string,
     text: string,
     types: Planner.TaskTypes.Type[]
-    deleted?: boolean
+    deleted?: boolean,
+    created?: any
   }
   interface Icon {
     icon: string,
@@ -20,14 +21,16 @@ declare namespace Planner.Tasks.Forms {
     types: any
   }
   interface Option {
-    value?: string,
-    label?: string
+    value: string,
+    label?: string,
+    length?: number,
+    style?: Object
   }
 }
 
 declare namespace Planner.TaskTypes {
   interface Type {
-    _id?: string,
+    _id: string,
     name: string
   }
 }

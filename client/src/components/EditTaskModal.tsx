@@ -36,7 +36,7 @@ export default class EditTaskModal extends React.Component<IEditTaskModalProps> 
       setSubmitting(false);
 
       modalStore.setShowTaskModal('');
-
+      taskStore.filters = [];
       setTimeout(() => {
         uiStore.setFormSuccess();
       }, 2000);
