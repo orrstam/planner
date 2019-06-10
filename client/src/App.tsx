@@ -1,10 +1,9 @@
 import * as React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import * as Loadable from 'react-loadable';
-import styled from 'styled-components';
 import Loader from './components/Loader';
-import { Flex, Box } from './components/layout';
-
+import { Flex } from './components/layout';
+import PrivateRoute from './components/PrivateRoute';
 
 const Landing = Loadable({
   loader: () => import('./views/Landing'),
@@ -18,30 +17,27 @@ const RemovedItems = Loadable({
   delay: 200
 });
 
-const Header = () => {
-  const Heading = styled.div`
-    padding: 15px 0;
-  `;
+const Register = Loadable({
+  loader: () => import('./views/Register'),
+  loading: Loader
+});
 
-  return(
-    <Heading>Jonas</Heading>
-  )
-}
+const Login = Loadable({
+  loader: () => import('./views/Auth/Login'),
+  loading: Loader
+});
 
 export default class App extends React.Component<{}, {}> {
   public render() {
     return (
-      <Box pl="20px" bg="#fcfcfc">
-        <Header />
-        <Flex justifyContent="center" minHeight="100vh">
-          <Box width="40vw">
-            <Switch>
-              <Route exact={true} path="/" component={Landing} />
-              <Route exact={true} path="/removed-tasks" component={RemovedItems} />
-            </Switch>
-          </Box>
-        </Flex>
-      </Box>
+      <Flex minHeight="100vh" bg="#fcfcfc">
+        <Switch>
+          <Route exact={true} path='/login' component={Login} />
+          <Route exact={true} path='/register' component={Register} />
+          <PrivateRoute path='/dashboard' component={Landing} />
+          <PrivateRoute path="/removed-tasks" component={RemovedItems} />
+        </Switch>
+      </Flex>
     );
   }
 }

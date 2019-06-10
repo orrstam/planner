@@ -1,16 +1,23 @@
 import { observable } from 'mobx';
-import api from '../services/api';
+import api, { getToken } from '../services/api';
+import { AxiosResponse } from 'axios';
 
 export default class TypeStore {
   @observable types: Planner.TaskTypes.Type[] = [];
 
   async fetch(): Promise<any> {
     try {
-      const data = await api.get('types');
-      this.types = data.data;
+      const data: AxiosResponse = await api.get('types', {
+        headers: { Authorization: `Bearer ${getToken()}` }
+      });
 
-    } catch(error) {
-      return Promise.reject(error);
+      if (data.status !== 200) {
+        throw data;
+      }
+
+      this.types = data.data;
+    } catch (error) {
+      return error;
     }
   }
 }

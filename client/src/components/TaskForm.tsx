@@ -2,18 +2,10 @@ import * as React from 'react';
 import { Formik, Form, Field, FormikErrors, FormikProps, FieldProps } from 'formik';
 import styled from 'styled-components';
 import Select from 'react-select';
-import { Box } from '../components/layout';
+import { Box, Input } from '../components/layout';
 
 const InputWrap = styled.div`
   margin-bottom: 15px;
-`;
-
-const Input = styled.input`
-  padding: 15px;
-  font-size: 16px;
-  width: 100%;
-  border: none;
-  box-shadow: 1px 4px 15px -2px #ccc;
 `;
 
 const Textarea = styled.textarea`
@@ -44,14 +36,14 @@ interface ITaskFormProps {
   handleSubmit: (data: Planner.Tasks.Forms.SubmitValues, {}) => Promise<void>,
   initialValues: Planner.Tasks.Forms.SubmitValues,
   validate: (values: Planner.Tasks.Forms.SubmitValues) => FormikErrors<any>,
-  types?: Planner.Tasks.Forms.Option[],
+  types?: Planner.Tasks.Forms.Option[]
 }
 
 const TaskForm: React.StatelessComponent<ITaskFormProps> = ({
   handleSubmit,
   initialValues,
   validate,
-  types,
+  types
 }) => {
   return (
     <Box mb="25px" mt="25px">
@@ -61,7 +53,7 @@ const TaskForm: React.StatelessComponent<ITaskFormProps> = ({
         <Field name="title">
           {({field, form}) => (
             <InputWrap>
-              <Input type="text" {...field} placeholder="Title"/>
+              <Input width="100%" type="text" {...field} placeholder="Title"/>
               <ErrorMessage>{ form.touched.title && form.errors.title }</ErrorMessage>
             </InputWrap>
           )}

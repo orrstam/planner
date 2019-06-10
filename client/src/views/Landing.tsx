@@ -1,10 +1,9 @@
 import * as React from 'react';
 import { inject, observer } from 'mobx-react';
-import styled from 'styled-components';
 import { TaskStore, TypeStore, uiStore } from '../stores/';
 import TasksList from '../components/TasksList';
 import Filter from '../components/Filter';
-import Flex from '../components/layout/Flex';
+import { Flex, Box } from '../components/layout';
 import Icon from '../components/Icon';
 
 const FormToggle = observer(({}) => {
@@ -22,8 +21,6 @@ const FormToggle = observer(({}) => {
   );
 })
 
-const Wrapper = styled.div``;
-
 interface LandingViewProps {
   taskStore: TaskStore,
   typeStore: TypeStore
@@ -37,7 +34,7 @@ export default class Landing extends React.Component<LandingViewProps> {
     this.initialFetch();
   }
 
-  public initialFetch() {
+  public async initialFetch() {
     this.props.taskStore!.fetch();
     this.props.typeStore.fetch();
   }
@@ -46,15 +43,20 @@ export default class Landing extends React.Component<LandingViewProps> {
     const tasks = this.props.taskStore!.taskList;
 
     return (
-      <Wrapper>
-        <Filter taskStore={this.props.taskStore} types={this.props.typeStore.types.slice()} />
-        <Flex mb="20px" justifyContent="flex-end">
-          <FormToggle />
+      <Flex justifyContent="center" flexDirection="row" width="100vw">
+        <Flex flex="0.25">Menu</Flex>
+        <Flex flex="0.75" flexDirection="column">
+          <Box width="60%">
+            <Filter taskStore={this.props.taskStore} types={this.props.typeStore.types.slice()} />
+            <Flex mb="20px" justifyContent="flex-end">
+              <FormToggle />
+            </Flex>
+            <TasksList
+              tasks={(this.props.taskStore.filters.length) ? this.props.taskStore.filteredTaskList : tasks.slice()}
+              types={this.props.typeStore.types.slice()} />
+          </Box>
         </Flex>
-        <TasksList
-          tasks={(this.props.taskStore.filters.length) ? this.props.taskStore.filteredTaskList : tasks.slice()}
-          types={this.props.typeStore.types.slice()} />
-      </Wrapper>
+      </Flex>
     )
   }
 }

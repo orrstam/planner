@@ -1,5 +1,5 @@
 import { observable, action, transaction } from 'mobx';
-import api from '../services/api';
+import api, { getToken } from '../services/api';
 
 export default class TaskStore {
   @observable taskList: Planner.Tasks.Task[] = [];
@@ -21,9 +21,11 @@ export default class TaskStore {
   }
 
   sort(key: string): Planner.Tasks.Task[] {
-    return this.taskList.sort((a: Planner.Tasks.Task, b: Planner.Tasks.Task): number => {
-      return ((a[key] > b[key]) ? -1 : ((a[key] < b[key]) ? 1 : 0));
-    });
+    return this.taskList.sort(
+      (a: Planner.Tasks.Task, b: Planner.Tasks.Task): number => {
+        return a[key] > b[key] ? -1 : a[key] < b[key] ? 1 : 0;
+      }
+    );
   }
 
   @action
@@ -42,7 +44,7 @@ export default class TaskStore {
 
     this.taskList.map(task => {
       task.types.forEach(type => {
-        if (filterValues.indexOf(type._id) >= 0 ) {
+        if (filterValues.indexOf(type._id) >= 0) {
           filteredTasks.push(task);
         }
       });
@@ -78,7 +80,9 @@ export default class TaskStore {
 
   async updateTask(task: Planner.Tasks.Task): Promise<any> {
     try {
-      const response = await api.put('/', task);
+      const response = await api.put('/', task, {
+        headers: { Authorization: `Bearer ${getToken()}` }
+      });
 
       this.addOrUpdateTask(response.data);
 
@@ -103,9 +107,20 @@ export default class TaskStore {
     const endpoint = this.fetchDeleted ? 'deleted' : '/';
 
     try {
-      const data = await api.get(endpoint);
-      transaction(() => data.data.forEach((item: Planner.Tasks.Task) => this.addOrUpdateTask(item)));
-    } catch(error) {
+      const data = await api.get(endpoint, {
+        headers: { Authorization: `Bearer ${getToken()}` }
+      });
+
+      if (data.status !== 200) {
+        throw data;
+      }
+
+      transaction(() =>
+        data.data.forEach((item: Planner.Tasks.Task) =>
+          this.addOrUpdateTask(item)
+        )
+      );
+    } catch (error) {
       return Promise.reject(error);
     }
   }

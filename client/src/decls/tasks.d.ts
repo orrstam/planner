@@ -34,3 +34,14 @@ declare namespace Planner.TaskTypes {
     name: string
   }
 }
+
+declare namespace Planner.Users.Forms {
+  interface RegisterValues {
+    username: string,
+    password?: string
+  }
+  interface SubmitValues {
+    username: string,
+    password: string
+  }
+}
