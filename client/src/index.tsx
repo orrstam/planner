@@ -10,13 +10,15 @@ import theme from './config/theme';
 import {
   taskStore,
   typeStore,
-  modalStore
+  modalStore,
+  userStore
  } from './stores';
 
 const stores = {
   taskStore,
   typeStore,
-  modalStore
+  modalStore,
+  userStore
 }
 
 ReactDOM.render(

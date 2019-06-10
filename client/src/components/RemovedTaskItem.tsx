@@ -16,8 +16,7 @@ const RemovedTaskItem: React.StatelessComponent<IRemovedTaskItemProps> = ({
 
   const clickHandler = async () => {
     if (task._id) {
-      const restored = await taskStore!.restoreTask(task._id);
-      console.log('Restored:', restored);
+      await taskStore!.restoreTask(task._id);
     }
   }
 

@@ -10,11 +10,13 @@ import {
   justifySelf,
   color,
   space,
+  flex,
   WidthProps,
   JustifyContentProps,
   SpaceProps,
   ColorProps,
-  HeightProps
+  HeightProps,
+  FlexProps
 } from 'styled-system';
 
 export type FlexProps = & FlexDirectionProps
@@ -23,10 +25,12 @@ export type FlexProps = & FlexDirectionProps
   & HeightProps
   & JustifyContentProps
   & SpaceProps
+  & FlexProps
   & React.HTMLProps<HTMLDivElement>;
 
 const Flex = styled<FlexProps, any>('div')`
   display: flex;
+  ${flex}
   ${flexDirection}
   ${justifyContent}
   ${justifySelf}

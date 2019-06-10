@@ -8,45 +8,49 @@ import { Box } from './layout';
 import FormSuccess from './FormSuccess';
 
 export interface IAddTaskFormProps {
-  taskStore?: TaskStore,
-  uiStore: UIStore,
-  types: Planner.TaskTypes.Type[],
+  taskStore?: TaskStore;
+  uiStore: UIStore;
+  types: Planner.TaskTypes.Type[];
 }
 
 @inject('taskStore')
 export default class AddTaskForm extends React.Component<IAddTaskFormProps> {
   handleSubmit = async (
     data: Planner.Tasks.Forms.SubmitValues,
-    { setSubmitting, setErrors, resetForm }: FormikActions<Planner.Tasks.Forms.SubmitValues>
-    ) => {
-      setSubmitting(true);
+    {
+      setSubmitting,
+      setErrors,
+      resetForm
+    }: FormikActions<Planner.Tasks.Forms.SubmitValues>
+  ) => {
+    setSubmitting(true);
 
-      // Only send type id to api
-      data.types = data.types.value;
+    // Only send type id to api
+    data.types = data.types.value;
 
-      const response = await this.props.taskStore!.createTask(data);
+    const response = await this.props.taskStore!.createTask(data);
 
-      if (response && response.error) {
-        setErrors(response.error);
-      } else {
-        this.props.uiStore.setFormSuccess();
-        resetForm();
-      }
+    if (response && response.error) {
+      setErrors(response.error);
+    } else {
+      this.props.uiStore.setFormSuccess();
+      resetForm();
+    }
 
-      this.props.uiStore.setShowTaskForm();
-      setSubmitting(false);
+    this.props.uiStore.setShowTaskForm();
+    setSubmitting(false);
 
-      setTimeout(() => {
-        this.props.uiStore.setFormSuccess();
-      }, 2000);
-    };
+    setTimeout(() => {
+      this.props.uiStore.setFormSuccess();
+    }, 2000);
+  };
 
   validate(values: Planner.Tasks.Forms.SubmitValues) {
     let errors: FormikErrors<any> = {};
 
     Object.keys(values).forEach(key => {
       if (!values[key]) {
-      errors[key] = 'Required';
+        errors[key] = 'Required';
       }
     });
 
@@ -68,8 +72,8 @@ export default class AddTaskForm extends React.Component<IAddTaskFormProps> {
           handleSubmit={this.handleSubmit}
           validate={this.validate}
           types={helpers.getOptionsFromTypes(this.props.types)}
-          />
+        />
       </Box>
-    )
+    );
   }
 }
