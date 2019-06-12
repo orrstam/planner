@@ -1,7 +1,14 @@
-import { action } from 'mobx';
+import { action, observable } from 'mobx';
 import api, { getToken, setToken } from '../services/api';
 
 export default class UserStore {
+  @observable activeUser: string = '';
+
+  @action
+  setActiveUser(id: string) {
+    this.activeUser = id;
+  }
+
   @action
   async authenticate(): Promise<any> {
     if (getToken()) {
@@ -10,6 +17,7 @@ export default class UserStore {
       });
 
       if (response.status === 200) {
+        this.setActiveUser(response.data._id);
         return response;
       }
     }

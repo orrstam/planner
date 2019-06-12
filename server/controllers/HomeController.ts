@@ -4,15 +4,20 @@ import Task from '../Models/Task';
 
 class HomeController implements IController {
   async create(req: Request, res: Response): Promise<any> {
-    const task = await (new Task( req.body )).save();
-    const populatedTask = await Task.findOne({_id: task._id}).populate('types');
-
+    const task = await new Task(req.body).save();
+    const populatedTask = await Task.findOne({ _id: task._id }).populate(
+      'types'
+    );
     res.send(populatedTask);
   }
 
   async get(req: Request, res: Response, next: NextFunction): Promise<any> {
-    const tasks = await Task.find()
-      .sort({'created': 'desc'})
+    const { user } = req.user;
+
+    const tasks = await Task.find({
+      users: { $in: [user._id] }
+    })
+      .sort({ created: 'desc' })
       .populate('types');
 
     res.send(tasks);
@@ -20,22 +25,27 @@ class HomeController implements IController {
 
   async update(req: Request, res: Response, next: NextFunction): Promise<any> {
     try {
-      const task = await Task
-        .findByIdAndUpdate(req.body._id, {$set: req.body}, { new: true })
-        .populate('types');
+      const task = await Task.findByIdAndUpdate(
+        req.body._id,
+        { $set: req.body },
+        { new: true }
+      ).populate('types');
 
       res.send(task);
     } catch (error) {
-        // Handle error
-        res.status(500).send(error);
+      // Handle error
+      res.status(500).send(error);
     }
   }
 
-  async getDeleted(req: Request, res: Response, next: NextFunction): Promise<any> {
+  async getDeleted(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<any> {
     const tasks = await Task.findDeleted();
     res.send(tasks);
   }
-
 
   async delete(req: Request, res: Response): Promise<any> {
     try {
@@ -58,4 +68,4 @@ class HomeController implements IController {
   }
 }
 
-export default new HomeController;
+export default new HomeController();

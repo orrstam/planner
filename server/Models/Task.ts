@@ -1,16 +1,16 @@
 import { Document, Schema, model } from 'mongoose';
 const mongooseDelete = require('mongoose-delete');
 
-export interface ITask extends Document{
+export interface ITask extends Document {
   title: {
-    type: String,
-    required: Boolean 
-  }
-  text: String,
+    type: String;
+    required: Boolean;
+  };
+  text: String;
   created: {
-    type: Date,
-    default: Date
-  }
+    type: Date;
+    default: Date;
+  };
 }
 
 const taskSchema = new Schema({
@@ -19,19 +19,27 @@ const taskSchema = new Schema({
     required: true
   },
   text: String,
-  types: [{
-    type: Schema.Types.ObjectId,
-    ref: 'Type'
-  }],
+  types: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Type'
+    }
+  ],
+  users: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'User'
+    }
+  ],
   created: {
     type: Date,
     default: Date.now
-  },
+  }
 });
 
 taskSchema.plugin(mongooseDelete, {
-   deletedAt : true,
-   overrideMethods: ['count', 'find']
+  deletedAt: true,
+  overrideMethods: ['count', 'find']
 });
 
 export default model<ITask>('Task', taskSchema);

@@ -1,19 +1,19 @@
 import * as React from 'react';
 import { FormikActions, FormikErrors } from 'formik';
 import { inject } from 'mobx-react';
-import { TaskStore, UIStore } from '../stores/';
+import { TaskStore, UIStore, UserStore } from '../stores/';
 import TaskForm from '../components/TaskForm';
 import helpers from '../services/helpers';
 import { Box } from './layout';
 import FormSuccess from './FormSuccess';
-
 export interface IAddTaskFormProps {
   taskStore?: TaskStore;
+  userStore?: UserStore;
   uiStore: UIStore;
   types: Planner.TaskTypes.Type[];
 }
 
-@inject('taskStore')
+@inject('taskStore', 'userStore')
 export default class AddTaskForm extends React.Component<IAddTaskFormProps> {
   handleSubmit = async (
     data: Planner.Tasks.Forms.SubmitValues,
@@ -25,16 +25,23 @@ export default class AddTaskForm extends React.Component<IAddTaskFormProps> {
   ) => {
     setSubmitting(true);
 
-    // Only send type id to api
-    data.types = data.types.value;
+    Object.assign(data, {
+      types: data.types.value,
+      users: this.props.userStore!.activeUser
+    });
 
-    const response = await this.props.taskStore!.createTask(data);
+    try {
+      const response = await this.props.taskStore!.createTask(data);
 
-    if (response && response.error) {
-      setErrors(response.error);
-    } else {
-      this.props.uiStore.setFormSuccess();
-      resetForm();
+      if (response && response.error) {
+        setErrors(response.error);
+      } else {
+        this.props.uiStore.setFormSuccess();
+        resetForm();
+      }
+    } catch (error) {
+      // Handle error
+      console.log('AddTaskForm Error: ', error);
     }
 
     this.props.uiStore.setShowTaskForm();
