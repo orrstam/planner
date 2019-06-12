@@ -1,9 +1,11 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import { Formik, Form, Field, FormikActions, FormikErrors } from 'formik';
-import { inject } from 'mobx-react';
+import { inject, observer } from 'mobx-react';
+import { action, observable } from 'mobx';
 import { Flex, Input, Button } from '../../components/layout';
 import { UserStore } from '../../stores/';
+import { Redirect } from 'react-router';
 
 const InputWrap = styled.div`
   margin-bottom: 15px;
@@ -20,7 +22,15 @@ const ErrorMessage = styled.div`
 `;
 
 @inject('userStore')
+@observer
 export default class Login extends React.Component<ILoginProps> {
+  @observable redirect: boolean = false;
+
+  @action
+  setRedirect(value: boolean): void {
+    this.redirect = value;
+  }
+
   handleSubmit = async (
     data: Planner.Users.Forms.RegisterValues,
     {
@@ -31,13 +41,17 @@ export default class Login extends React.Component<ILoginProps> {
   ) => {
     setSubmitting(true);
 
-    const response = await this.props.userStore.login(data);
+    try {
+      const response = await this.props.userStore.login(data);
 
-    if (response && response.error) {
-      setErrors(response.message);
-    } else {
-      resetForm();
-      // window.location.href = 'http://localhost:3000/dashboard';
+      if (response.status && response.status === 200) {
+        resetForm();
+        this.setRedirect(true);
+      } else {
+        setErrors(response.message);
+      }
+    } catch (error) {
+      console.log('error: ', error);
     }
 
     setSubmitting(false);
@@ -56,6 +70,10 @@ export default class Login extends React.Component<ILoginProps> {
   }
 
   public render() {
+    if (this.redirect) {
+      return <Redirect to='/dashboard' />;
+    }
+
     return (
       <Flex justifyContent='center' width='100vw'>
         <Formik
