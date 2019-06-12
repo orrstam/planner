@@ -6,8 +6,8 @@ import { TaskStore } from 'src/stores';
 import { Box } from '../components/layout';
 
 interface IFilterProps {
-  types: Planner.TaskTypes.Type[],
-  taskStore: TaskStore
+  types: Planner.TaskTypes.Type[];
+  taskStore: TaskStore;
 }
 
 export default class Filter extends React.Component<IFilterProps> {
@@ -18,19 +18,23 @@ export default class Filter extends React.Component<IFilterProps> {
     } else {
       this.props.taskStore.filters = [];
     }
-  }
+  };
 
   public render() {
-    return(
-      <TypesSelect filters={this.props.taskStore.filters} options={helpers.getOptionsFromTypes(this.props.types)} handleChange={this.handleChange} />
-    )
+    return (
+      <TypesSelect
+        filters={this.props.taskStore.filters}
+        options={helpers.getOptionsFromTypes(this.props.types)}
+        handleChange={this.handleChange}
+      />
+    );
   }
 }
 
 interface ITypesSelectProps {
-  options: Planner.Tasks.Forms.Option[],
-  handleChange: (e: Planner.Tasks.Forms.Option) => void,
-  filters: Planner.Tasks.Forms.Option[]
+  options: Planner.Tasks.Forms.Option[];
+  handleChange: (e: Planner.Tasks.Forms.Option) => void;
+  filters: Planner.Tasks.Forms.Option[];
 }
 
 const TypesSelect: React.StatelessComponent<ITypesSelectProps> = ({
@@ -55,28 +59,28 @@ const TypesSelect: React.StatelessComponent<ITypesSelectProps> = ({
       backgroundColor: `rgba(${theme.taskTypes.colors[data.data.label]}, .5)`,
       ':hover': {
         backgroundColor: `rgba(${theme.taskTypes.colors[data.data.label]}, 1)`,
-        color: '#333',
-      },
+        color: '#333'
+      }
     }),
-    multiValue: (styles: any, data: any ) => {
+    multiValue: (styles: any, data: any) => {
       const color = theme.taskTypes.colors[data.data.label];
 
       return {
         ...styles,
-        backgroundColor: `rgba(${color}, .75)`,
+        backgroundColor: `rgba(${color}, .75)`
       };
-    },
+    }
   };
 
   return (
-    <Box width="50%">
+    <Box width='100%'>
       <Select
         isMulti={true}
         options={options}
         onChange={handleChange}
         styles={customStyles}
-        value={(filters.length) ? filters.slice() : []}
+        value={filters.length ? filters.slice() : []}
       />
     </Box>
-  )
-}
+  );
+};

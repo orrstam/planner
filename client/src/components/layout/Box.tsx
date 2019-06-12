@@ -1,5 +1,5 @@
 import * as React from 'react';
-import styled from 'styled-components'
+import styled from 'styled-components';
 import {
   width,
   space,
@@ -13,11 +13,11 @@ import {
   BoxShadowProps
 } from 'styled-system';
 
-export type BoxProps = WidthProps
-  & SpaceProps
-  & ColorProps
-  & BoxShadowProps
-  & React.HTMLProps<HTMLDivElement>;
+export type BoxProps = WidthProps &
+  SpaceProps &
+  ColorProps &
+  BoxShadowProps &
+  React.HTMLProps<HTMLDivElement>;
 
 const Box = styled<BoxProps, any>('div')`
   ${width}
@@ -28,4 +28,4 @@ const Box = styled<BoxProps, any>('div')`
   ${boxShadow}
 `;
 
-export default Box
+export default Box;
