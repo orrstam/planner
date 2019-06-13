@@ -1,19 +1,16 @@
 import * as React from 'react';
+import { LoadingComponentProps } from 'react-loadable';
 
-interface ILoaderProps {
-  error?: boolean;
-  pastDelay?: boolean;
-  timedOut?: boolean;
-}
-
-const Loading: React.StatelessComponent<ILoaderProps> = (props) => {
-  if (props.error) {
-    console.log('Error');
-    return <div>Loading...</div>
-  } else {
-    console.log('loading');
-    return <div>Loading...</div>
+export default class Loading extends React.PureComponent<
+  LoadingComponentProps
+> {
+  public render() {
+    if (this.props.error) {
+      console.log('Error');
+      return <div>Loading...</div>;
+    } else {
+      console.log('loading');
+      return <div>Loading...</div>;
+    }
   }
-};
-
-export default Loading;
+}
