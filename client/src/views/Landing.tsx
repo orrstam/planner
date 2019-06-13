@@ -1,9 +1,10 @@
 import * as React from 'react';
 import { inject, observer } from 'mobx-react';
+import { Link } from 'react-router-dom';
 import { TaskStore, TypeStore, uiStore } from '../stores/';
 import TasksList from '../components/TasksList';
 import Filter from '../components/Filter';
-import { Flex } from '../components/layout';
+import { Flex, Box } from '../components/layout';
 import Icon from '../components/Icon';
 
 const FormToggle = observer(({}) => {
@@ -20,6 +21,18 @@ const FormToggle = observer(({}) => {
     />
   );
 });
+
+const Header = () => {
+  return (
+    <Flex alignSelf='flex-end' p='5px 0'>
+      <Box color='linkInverted'>
+        <Link style={{ color: 'inherit', textDecoration: 'none' }} to='/logout'>
+          Bye
+        </Link>
+      </Box>
+    </Flex>
+  );
+};
 
 interface LandingViewProps {
   taskStore: TaskStore;
@@ -43,8 +56,9 @@ export default class Landing extends React.Component<LandingViewProps> {
     const tasks = this.props.taskStore!.taskList;
 
     return (
-      <Flex justifyContent='center' width='100vw' p='0 10px'>
-        <Flex width={[1, 2 / 3]} flexDirection='column'>
+      <Flex flexDirection='column' width='100vw' p='0 10px'>
+        <Header />
+        <Flex width={[1, 2 / 3]} flexDirection='column' alignSelf='center'>
           <Filter
             taskStore={this.props.taskStore}
             types={this.props.typeStore.types.slice()}

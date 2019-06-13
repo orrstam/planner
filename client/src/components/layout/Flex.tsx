@@ -1,5 +1,5 @@
 import * as React from 'react';
-import styled from 'styled-components'
+import styled from 'styled-components';
 import {
   flexDirection,
   width,
@@ -8,6 +8,7 @@ import {
   FlexDirectionProps,
   justifyContent,
   justifySelf,
+  alignSelf,
   color,
   space,
   flex,
@@ -19,14 +20,14 @@ import {
   FlexProps
 } from 'styled-system';
 
-export type FlexProps = & FlexDirectionProps
-  & WidthProps
-  & ColorProps
-  & HeightProps
-  & JustifyContentProps
-  & SpaceProps
-  & FlexProps
-  & React.HTMLProps<HTMLDivElement>;
+export type FlexProps = FlexDirectionProps &
+  WidthProps &
+  ColorProps &
+  HeightProps &
+  JustifyContentProps &
+  SpaceProps &
+  FlexProps &
+  React.HTMLProps<HTMLDivElement>;
 
 const Flex = styled<FlexProps, any>('div')`
   display: flex;
@@ -34,6 +35,7 @@ const Flex = styled<FlexProps, any>('div')`
   ${flexDirection}
   ${justifyContent}
   ${justifySelf}
+  ${alignSelf}
   ${space}
   ${width}
   ${height}
@@ -41,4 +43,4 @@ const Flex = styled<FlexProps, any>('div')`
   ${color}
 `;
 
-export default Flex
+export default Flex;

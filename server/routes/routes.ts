@@ -28,6 +28,7 @@ class Routes {
     // User routes
     this.router.post('/api/v1/users/register', AuthController.create);
     this.router.post('/api/v1/users/login', AuthController.login);
+    this.router.get('/api/v1/users/logout', AuthController.logout);
     this.router.get('/api/v1/users/user', auth, AuthController.user);
 
     // Type routes

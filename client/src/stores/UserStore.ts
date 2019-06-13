@@ -54,6 +54,23 @@ export default class UserStore {
       return error;
     }
   }
+
+  async logout(): Promise<any> {
+    this.destroy();
+
+    try {
+      const response = await api.get('/users/logout');
+      return response;
+    } catch (error) {
+      // Handle error
+    }
+  }
+
+  @action
+  destroy() {
+    this.activeUser = '';
+    return Promise.resolve();
+  }
 }
 
 export const userStore = new UserStore();

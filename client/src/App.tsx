@@ -27,15 +27,21 @@ const Login = Loadable({
   loading: Loader
 });
 
+const Logout = Loadable({
+  loader: () => import('./views/Auth/Logout'),
+  loading: Loader
+});
+
 export default class App extends React.Component<{}, {}> {
   public render() {
     return (
-      <Flex minHeight="100vh" bg="#fcfcfc">
+      <Flex minHeight='100vh' bg='#fcfcfc'>
         <Switch>
+          <Route exact={true} path='/logout' component={Logout} />
           <Route exact={true} path='/login' component={Login} />
           <Route exact={true} path='/register' component={Register} />
           <PrivateRoute path='/dashboard' component={Landing} />
-          <PrivateRoute path="/removed-tasks" component={RemovedItems} />
+          <PrivateRoute path='/removed-tasks' component={RemovedItems} />
         </Switch>
       </Flex>
     );

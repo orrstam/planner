@@ -49,6 +49,11 @@ class AuthController implements IController {
     });
   }
 
+  logout(req: Request, res: Response): void {
+    req.logout();
+    res.send({ data: 'logged out' });
+  }
+
   login(req: Request, res: Response, next: NextFunction): any {
     passport.authenticate('local', { session: false }, (error, user) => {
       try {

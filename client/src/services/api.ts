@@ -34,5 +34,9 @@ function setToken(token: string): void {
   localStorage.setItem('token', token);
 }
 
+function destroyToken(): void {
+  localStorage.removeItem('token');
+}
+
 export default api;
-export { getWeek, getToken, setToken };
+export { getWeek, getToken, setToken, destroyToken };
