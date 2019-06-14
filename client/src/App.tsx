@@ -40,7 +40,7 @@ export default class App extends React.Component<{}, {}> {
           <Route exact={true} path='/logout' component={Logout} />
           <Route exact={true} path='/login' component={Login} />
           <Route exact={true} path='/register' component={Register} />
-          <PrivateRoute path='/dashboard' component={Landing} />
+          <PrivateRoute path='/' component={Landing} />
           <PrivateRoute path='/removed-tasks' component={RemovedItems} />
         </Switch>
       </Flex>
