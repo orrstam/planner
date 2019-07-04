@@ -71,7 +71,7 @@ const Login: React.FC<ILoginProps> = () => {
   }
 
   return (
-    <Flex justifyContent='center' width='100vw'>
+    <Flex justifyContent='center'>
       <Formik
         onSubmit={handleSubmit}
         initialValues={{ username: 'orrstam@itiden.se', password: '' }}

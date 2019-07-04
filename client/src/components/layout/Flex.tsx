@@ -9,11 +9,14 @@ import {
   justifyContent,
   justifySelf,
   alignSelf,
+  alignItems,
   color,
   space,
+  fontSize,
   flex,
   WidthProps,
   JustifyContentProps,
+  AlignItemsProps,
   SpaceProps,
   ColorProps,
   HeightProps,
@@ -25,6 +28,7 @@ export type FlexProps = FlexDirectionProps &
   ColorProps &
   HeightProps &
   JustifyContentProps &
+  AlignItemsProps &
   SpaceProps &
   FlexProps &
   React.HTMLProps<HTMLDivElement>;
@@ -36,7 +40,9 @@ const Flex = styled<FlexProps, any>('div')`
   ${justifyContent}
   ${justifySelf}
   ${alignSelf}
+  ${alignItems}
   ${space}
+  ${fontSize}
   ${width}
   ${height}
   ${minHeight}

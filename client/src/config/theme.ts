@@ -1,10 +1,15 @@
 const theme = {
-  defaultMargin: '25px',
+  space: {
+    defaultMargin: '25px',
+    boxPadding: '20px 10px 30px'
+  },
   colors: {
     background: '#fff',
     link: '#fff',
     linkInverted: 'rgba(226,125,96,1)',
-    error: '#ad5b5b'
+    error: '#ad5b5b',
+    text: '#333',
+    textLight: 'rgba(51, 51, 51, 0.4)'
   },
   taskTypes: {
     colors: {
