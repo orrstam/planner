@@ -17,6 +17,11 @@ const RemovedItems = Loadable({
   delay: 200
 });
 
+const Packages = Loadable({
+  loader: () => import('./views/Packages'),
+  loading: Loader
+});
+
 const Register = Loadable({
   loader: () => import('./views/Register'),
   loading: Loader
@@ -35,12 +40,19 @@ const Logout = Loadable({
 export default class App extends React.Component<{}, {}> {
   public render() {
     return (
-      <Flex minHeight='100vh' bg='#fcfcfc'>
+      <Flex
+        flexDirection='column'
+        bg='#fcfcfc'
+        width='100vw'
+        height='100vh'
+        p='0 10px'
+      >
         <Switch>
           <Route exact={true} path='/logout' component={Logout} />
           <Route exact={true} path='/login' component={Login} />
           <Route exact={true} path='/register' component={Register} />
-          <PrivateRoute path='/' component={Landing} />
+          <PrivateRoute exact={true} path='/' component={Landing} />
+          <PrivateRoute path='/packages' component={Packages} />
           <PrivateRoute path='/removed-tasks' component={RemovedItems} />
         </Switch>
       </Flex>

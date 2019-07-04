@@ -4,3 +4,5 @@ export { default as ModalBox } from './ModalBox';
 export { default as Circle } from './Circle';
 export { default as Input } from './Input';
 export { default as Button } from './Button';
+export { default as Logo } from './Logo';
+export { default as ProfileWrapper } from './ProfileWrapper';

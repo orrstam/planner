@@ -2,7 +2,8 @@ import * as express from 'express';
 import {
   HomeController,
   TypesController,
-  AuthController
+  AuthController,
+  StravaController
 } from '../controllers';
 import * as passport from 'passport';
 import { NextFunction } from 'connect';
@@ -28,13 +29,38 @@ class Routes {
     // User routes
     this.router.post('/api/v1/users/register', AuthController.create);
     this.router.post('/api/v1/users/login', AuthController.login);
+    this.router.put('/api/v1/users/user/update', auth, AuthController.update);
     this.router.get('/api/v1/users/logout', AuthController.logout);
     this.router.get('/api/v1/users/user', auth, AuthController.user);
 
     // Type routes
-    this.router.get('/api/v1/types', auth, TypesController.get);
+    this.router.get('/api/v1/types', TypesController.get);
+
+    /* Package routes */
+
+    // Strava
+    this.router.get('/api/v1/packages/strava/auth', StravaController.auth);
+    this.router.get('/api/v1/packages/strava/token', StravaController.token);
+    this.router.get(
+      '/api/v1/packages/strava/athlete',
+      auth,
+      StravaController.athlete
+    );
+    this.router.get(
+      '/api/v1/packages/strava/athlete/activities',
+      auth,
+      StravaController.activities
+    );
   }
 }
+
+export const stravaAuth = (
+  req: express.Request,
+  res: express.Response,
+  next: NextFunction
+): any => {
+  next();
+};
 
 export const auth = (
   req: express.Request,
@@ -59,5 +85,4 @@ export const auth = (
     }
   )(req, res, next);
 };
-
 export default new Routes();
