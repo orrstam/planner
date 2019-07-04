@@ -1,12 +1,15 @@
 import * as React from 'react';
 import { observer } from 'mobx-react';
 import { Route, Redirect } from 'react-router';
+import { Link } from 'react-router-dom';
 import { userStore } from '../stores/UserStore';
 import { observable, action } from 'mobx';
+import { Flex, Box } from './layout';
 
 interface IPrivateRouteProps {
   path: string;
   component: React.ComponentType<any>;
+  exact?: boolean;
 }
 
 interface IAuthenticateProps {}
@@ -55,12 +58,28 @@ class Authenticate extends React.Component<IAuthenticateProps> {
   }
 }
 
-const PrivateRoute = ({ component: Component }: IPrivateRouteProps) => (
+const Header = () => {
+  return (
+    <Flex alignSelf='flex-end' p='5px 0'>
+      <Box color='linkInverted'>
+        <Link style={{ color: 'inherit', textDecoration: 'none' }} to='/logout'>
+          Bye
+        </Link>
+      </Box>
+    </Flex>
+  );
+};
+
+const PrivateRoute = ({ component: Component, exact }: IPrivateRouteProps) => (
   <Route
+    exact={exact}
     render={props => {
       return (
         <Authenticate>
-          <Component />
+          <>
+            <Header />
+            <Component />
+          </>
         </Authenticate>
       );
     }}
