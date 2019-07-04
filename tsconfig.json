@@ -1,11 +1,6 @@
-
 {
-  "files": [
-    "server/server.ts"
-  ],
-  "include": [
-    "server/*"
-  ],
+  "files": ["server/server.ts"],
+  "include": ["server/*"],
   "compilerOptions": {
     "module": "commonjs",
     "noImplicitAny": true,
@@ -16,12 +11,10 @@
     "baseUrl": ".",
     "moduleResolution": "node",
     "removeComments": true,
-    "typeRoots": [ "node_modules/@types" ],
+    "typeRoots": ["node_modules/@types"],
+    "noUnusedLocals": false,
     "paths": {
-      "*": [
-        "node_modules/@types/*",
-        "./server/types/*"
-      ]
+      "*": ["node_modules/@types/*", "./server/types/*"]
     }
   }
 }
