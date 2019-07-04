@@ -2,7 +2,7 @@ import * as React from 'react';
 import Select from 'react-select';
 import helpers from '../services/helpers';
 import theme from '../config/theme';
-import { TaskStore } from 'src/stores';
+import { TaskStore } from '../stores';
 import { Box } from '../components/layout';
 
 interface IFilterProps {
