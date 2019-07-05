@@ -16,7 +16,7 @@ export default class UserStore {
         headers: { Authorization: `Bearer ${getToken()}` }
       });
 
-      if (response.status === 200) {
+      if (response && response.status === 200) {
         this.setActiveUser(response.data._id);
         return response;
       }

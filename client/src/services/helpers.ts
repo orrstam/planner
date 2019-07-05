@@ -21,12 +21,17 @@ function distanceToKm(meters: number): number {
 
 function secondsTimeObject(seconds: number): {hours: number, minutes: number} {
   const hours = Math.floor(seconds / 3600);
-  const minutes = Math.floor((seconds - hours * 3600) / 60);
+  const minutes = ((seconds - hours * 3600) / 60);
+
   return {
     hours: hours,
     minutes: minutes
   }
 }
 
+function secondsToMinutes(seconds: number): string {
+  return (seconds / 60).toFixed(6);
+}
+
 export default helpers;
-export { distanceToKm, secondsTimeObject };
+export { distanceToKm, secondsTimeObject, secondsToMinutes };

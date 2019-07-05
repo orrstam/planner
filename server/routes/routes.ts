@@ -41,16 +41,21 @@ class Routes {
     // Strava
     this.router.get('/api/v1/packages/strava/auth', StravaController.auth);
     this.router.get('/api/v1/packages/strava/token', StravaController.token);
-    this.router.get(
-      '/api/v1/packages/strava/athlete',
-      auth,
-      StravaController.athlete
-    );
-    this.router.get(
-      '/api/v1/packages/strava/athlete/activities',
-      auth,
-      StravaController.activities
-    );
+      // Athlete
+      this.router.get(
+        '/api/v1/packages/strava/athlete',
+        auth,
+        StravaController.athlete
+      );
+      this.router.get(
+        '/api/v1/packages/strava/athlete/activities',
+        auth,
+        StravaController.activities
+      );
+      this.router.get('/api/v1/packages/strava/athlete/stats', auth, StravaController.stats);
+
+      // Activities
+      this.router.get('/api/v1/packages/strava/activities/activity', auth, StravaController.activity);
   }
 }
 

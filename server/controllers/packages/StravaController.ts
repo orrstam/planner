@@ -53,22 +53,52 @@ class StravaController implements IStravaController {
     );
   }
 
+  stats(req: Request, res: Response) {
+    const { access_token } = req.query;
+
+    try {
+      strava.athletes.stats({access_token: access_token, id: 27017939}, (error: any, data: any) => {
+        if (error) {
+          throw Error(error);
+        }
+
+        res.send(data);
+      });
+    } catch(err) {
+      console.log('err ', err);
+    }
+  }
+
+  activity(req: Request, res: Response) {
+    const { access_token, id } = req.query;
+
+    strava.activities.get({ access_token: access_token, id: id, }, (error: any, data: any) => {
+      if (error) {
+        throw Error(error)
+      }
+
+      res.send(data);
+    });
+  }
+
   activities(req: Request, res: Response) {
-    const { page, access_token } = req.query;
+    const { page, access_token, before, after } = req.query;
 
     try {
       strava.athlete.listActivities(
-        { access_token: access_token, page: page, per_page: 99 },
+        { access_token: access_token, page: page, after: after, before: before, per_page: 99 },
         (error: any, data: any) => {
           if (error) {
             throw Error(error);
           }
 
-          res.send(data);
+          const filtered = data.filter(item => item.type === 'Run');
+
+          res.send(filtered);
         }
       );
     } catch (error) {
-      // console.log('ERROR ', error);
+      console.log('ERROR ', error);
     }
   }
 }
