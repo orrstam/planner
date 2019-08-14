@@ -9,11 +9,13 @@ interface IStats {
     distance: number;
     splits: number;
     activities: number;
+    distancePerActivity: number;
   },
   comparison: {
     distance: number;
     splits: number;
     activities: number;
+    distancePerActivity: number;
   }
   done: boolean;
 }
@@ -33,19 +35,23 @@ function requestData(b: moment.Moment, a: moment.Moment) {
 function mapResponseData(data: any) {
   let splits: number[] = [];
   let distance: number = 0;
+  let distances: number[] = [];
 
   data.map((activity: Planner.Strava.Activity) => {
     const split = parseFloat(secondsToMinutes(activity.moving_time)) / distanceToKm(activity.distance);
 
     distance = distance + distanceToKm(activity.distance);
+    distances.push(distanceToKm(activity.distance));
     splits.push(split);
   });
 
   const split = splits.reduce((x, y) => x + y, 0) / splits.length;
+  const distancePerActivity = distances.reduce((x, y) => x + y, 0) / distances.length;
 
   return {
     splits: split,
     distance: distance,
+    distancePerActivity: distancePerActivity,
     activities: data.length
   }
 }
@@ -62,7 +68,7 @@ export function useComparisonStats(search: boolean, period: moment.unitOfTime.St
 
       if (response && response.data) {
         const current = mapResponseData(response.data);
-
+        console.log('Current: ', current);
         const comparisonBefore = before.subtract(1, period as moment.unitOfTime.DurationConstructor);
         const comparisonAfter = after.subtract(1, period as moment.unitOfTime.DurationConstructor);
 

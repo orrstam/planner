@@ -258,6 +258,14 @@ const Strava: React.FC<{}> = () => {
             }}
             decimals={0}
           />
+          <StatsTableRow
+            title="Distance per activity (km)"
+            data={{
+              current: comparisonStats.current.distancePerActivity,
+              comparison: comparisonStats.comparison.distancePerActivity
+            }}
+            decimals={2}
+          />
         </>
       ) : (
         <Button
