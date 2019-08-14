@@ -68,7 +68,7 @@ export function useComparisonStats(search: boolean, period: moment.unitOfTime.St
 
       if (response && response.data) {
         const current = mapResponseData(response.data);
-        console.log('Current: ', current);
+
         const comparisonBefore = before.subtract(1, period as moment.unitOfTime.DurationConstructor);
         const comparisonAfter = after.subtract(1, period as moment.unitOfTime.DurationConstructor);
 
