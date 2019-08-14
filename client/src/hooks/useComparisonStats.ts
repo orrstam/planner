@@ -63,8 +63,8 @@ export function useComparisonStats(search: boolean, period: moment.unitOfTime.St
       if (response && response.data) {
         const current = mapResponseData(response.data);
 
-        const comparisonBefore = before.subtract(1, 'year');
-        const comparisonAfter = after.subtract(1, 'year');
+        const comparisonBefore = before.subtract(1, period as moment.unitOfTime.DurationConstructor);
+        const comparisonAfter = after.subtract(1, period as moment.unitOfTime.DurationConstructor);
 
         const comparisonResponse = await api.get('/packages/strava/athlete/activities', requestData(comparisonBefore, comparisonAfter));
 
