@@ -6,8 +6,10 @@ import * as moment from 'moment';
 import { stravaStore } from '../../stores';
 import api, { getToken } from '../../services/api';
 import { Flex, Box, ProfileWrapper, Button } from '../layout';
+import { ExerciseGoals } from './ExerciseGoals';
 import { useComparisonStats } from '../../hooks/useComparisonStats';
 import { distanceToKm, secondsTimeObject } from '../../services/helpers';
+import Icon from '../Icon';
 
 const Image = styled.img`
   width: 100%;
@@ -34,7 +36,7 @@ const StatsTableRow = (props: {
   data: IStatsData;
   decimals: number;
 }) => (
-  <Flex width="100%" m="1px 0" fontSize="20px" color="text">
+  <Flex width="100%" m="1px 0" fontSize="16px" color="text">
     <Flex
       flex="1"
       alignItems="center"
@@ -122,7 +124,7 @@ const Strava: React.FC<{}> = () => {
     }),
     container: (base: any) => ({
       ...base,
-      width: '40%'
+      width: '105px'
     }),
     control: (base: any) => ({
       ...base,
@@ -135,6 +137,10 @@ const Strava: React.FC<{}> = () => {
     })
   };
 
+  if (!athlete) {
+    return <Box>No Athlete</Box>;
+  }
+
   return (
     <Flex
       p="boxPadding"
@@ -144,16 +150,14 @@ const Strava: React.FC<{}> = () => {
       flexDirection="column"
     >
       <Box>
-        {athlete && (
-          <ProfileWrapper>
-            <Image src={athlete.profile} />
-          </ProfileWrapper>
-        )}
+        <ProfileWrapper>
+          <Image src={athlete.profile} />
+        </ProfileWrapper>
       </Box>
       <Flex
         width="100%"
         mt="defaultMargin"
-        fontSize="20px"
+        fontSize="16px"
         color="text"
         mb="15px"
       >
@@ -194,9 +198,11 @@ const Strava: React.FC<{}> = () => {
           </>
         )}
       </Flex>
-      {comparisonStats && comparisonStats.done ? (
+
+      {loadComparisonStats && comparisonStats ? (
         <>
-          <Flex width="100%" m="5px 0" fontSize="20px" color="text">
+          <ExerciseGoals />
+          <Flex width="100%" m="5px 0" color="text">
             <Flex
               flex="1"
               alignItems="center"
@@ -272,8 +278,9 @@ const Strava: React.FC<{}> = () => {
           bg="#ffffff"
           color="rgba(226, 125, 96, 1)"
           onClick={showMoreStats}
+          mt="5px"
         >
-          show more
+          <Icon color="#7f7f7f" onClick={ close } icon={'angle-down'} size="2x" />
         </Button>
       )}
     </Flex>

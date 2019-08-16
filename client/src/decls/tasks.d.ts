@@ -3,7 +3,9 @@ declare namespace Planner.Tasks {
     _id?: string,
     title: string,
     text: string,
-    types: Planner.TaskTypes.Type[]
+    types: Planner.TaskTypes.Type[],
+    period: { label: string, value: string } | string,
+    goal?: number,
     deleted?: boolean,
     created?: any
   }
@@ -18,6 +20,8 @@ declare namespace Planner.Tasks.Forms {
     _id?: string,
     title: string,
     text: string,
+    period: { label: any, value: any },
+    goal?: number,
     types: any
   }
   interface Option {

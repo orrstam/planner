@@ -1,3 +1,5 @@
+import * as moment from 'moment';
+
 const helpers = {
   getOptionsFromTypes: (
     types: Array<Planner.TaskTypes.Type>
@@ -33,5 +35,12 @@ function secondsToMinutes(seconds: number): string {
   return (seconds / 60).toFixed(6);
 }
 
+function getPeriodDates(period: string) {
+  return {
+    before: moment().endOf(period as moment.unitOfTime.StartOf),
+    after: moment().endOf(period as moment.unitOfTime.StartOf).subtract(1, period as moment.unitOfTime.DurationConstructor)
+  }
+}
+
 export default helpers;
-export { distanceToKm, secondsTimeObject, secondsToMinutes };
+export { distanceToKm, secondsTimeObject, secondsToMinutes, getPeriodDates };

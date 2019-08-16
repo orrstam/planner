@@ -27,7 +27,8 @@ export default class AddTaskForm extends React.Component<IAddTaskFormProps> {
 
     Object.assign(data, {
       types: data.types.value,
-      users: this.props.userStore!.activeUser
+      users: this.props.userStore!.activeUser,
+      period: data.period.value
     });
 
     try {
@@ -68,6 +69,7 @@ export default class AddTaskForm extends React.Component<IAddTaskFormProps> {
     const initialValues: Planner.Tasks.Forms.SubmitValues = {
       title: '',
       text: '',
+      period: { value: 'day', label: 'Day' },
       types: []
     };
 

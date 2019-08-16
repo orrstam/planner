@@ -81,6 +81,7 @@ export default class EditTaskModal extends React.Component<
                 title: task.title,
                 text: task.text,
                 _id: task._id,
+                period: { label: task.period, value: task.period },
                 types: [{ value: task.types[0]._id, label: task.types[0].name }]
               }}
               handleSubmit={this.handleSubmit}

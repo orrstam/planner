@@ -7,6 +7,8 @@ export interface ITask extends Document {
     required: Boolean;
   };
   text: String;
+  period: String;
+  goal: Number;
   created: {
     type: Date;
     default: Date;
@@ -19,6 +21,8 @@ const taskSchema = new Schema({
     required: true
   },
   text: String,
+  period: String,
+  goal: Number,
   types: [
     {
       type: Schema.Types.ObjectId,

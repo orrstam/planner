@@ -1,7 +1,6 @@
 import * as React from 'react';
 import * as moment from 'moment';
-import { distanceToKm, secondsToMinutes } from '../services/helpers';
-import api, { getToken } from '../services/api';
+import { distanceToKm, secondsToMinutes, getPeriodDates } from '../services/helpers';
 import {stravaStore} from '../stores/StravaStore';
 
 interface IStats {
@@ -18,18 +17,6 @@ interface IStats {
     distancePerActivity: number;
   }
   done: boolean;
-}
-
-function requestData(b: moment.Moment, a: moment.Moment) {
-  return {
-    params: {
-      access_token: stravaStore.accessToken,
-      page: 1,
-      before: b.unix(),
-      after: a.unix()
-    },
-    headers: { Authorization: `Bearer ${getToken()}` }
-  }
 }
 
 function mapResponseData(data: any) {
@@ -59,23 +46,22 @@ function mapResponseData(data: any) {
 export function useComparisonStats(search: boolean, period: moment.unitOfTime.StartOf): IStats | undefined {
   const [stats, setStats] = React.useState<IStats>();
 
-  const before = moment().endOf(period);
-  const after = moment().endOf(period).subtract(1, period as moment.unitOfTime.DurationConstructor);
+  const currentDates = getPeriodDates(period as string);
 
   React.useEffect(() => {
     async function fetchStats() {
-      const response = await api.get('/packages/strava/athlete/activities', requestData(before, after));
+      const response = await stravaStore.getActivitiesByDates(currentDates.before, currentDates.after);
 
-      if (response && response.data) {
-        const current = mapResponseData(response.data);
+      if (response) {
+        const current = mapResponseData(response);
 
-        const comparisonBefore = before.subtract(1, period as moment.unitOfTime.DurationConstructor);
-        const comparisonAfter = after.subtract(1, period as moment.unitOfTime.DurationConstructor);
+        const comparisonBefore = currentDates.before.subtract(1, period as moment.unitOfTime.DurationConstructor);
+        const comparisonAfter = currentDates.after.subtract(1, period as moment.unitOfTime.DurationConstructor);
 
-        const comparisonResponse = await api.get('/packages/strava/athlete/activities', requestData(comparisonBefore, comparisonAfter));
+        const comparisonResponse = await stravaStore.getActivitiesByDates(comparisonBefore, comparisonAfter);
 
-        if (comparisonResponse && comparisonResponse.data) {
-          const comparison = mapResponseData(comparisonResponse.data);
+        if (comparisonResponse) {
+          const comparison = mapResponseData(comparisonResponse);
 
           setStats( { current: current, comparison: comparison, done: true } );
         }

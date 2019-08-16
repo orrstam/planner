@@ -1,4 +1,5 @@
 import { observable, action } from 'mobx';
+import * as moment from 'moment';
 import api, { getToken } from '../services/api';
 import { userStore } from './';
 
@@ -25,6 +26,26 @@ export default class StravaStore {
     } catch (error) {
       console.log('fetchAthlete error: ', error);
       return Promise.reject(error);
+    }
+  }
+
+  async getActivitiesByDates(b: moment.Moment, a: moment.Moment) {
+    try {
+      const response = await api.get('/packages/strava/athlete/activities', {
+        params: {
+          access_token: this.accessToken,
+          page: 1,
+          before: b.unix(),
+          after: a.unix()
+        },
+        headers: { Authorization: `Bearer ${getToken()}` }
+      });
+
+      if (response.status === 200 && response.data) {
+        return response.data;
+      }
+    } catch (error) {
+      // 
     }
   }
 }

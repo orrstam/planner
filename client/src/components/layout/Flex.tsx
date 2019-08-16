@@ -14,13 +14,15 @@ import {
   space,
   fontSize,
   flex,
+  borders,
   WidthProps,
   JustifyContentProps,
   AlignItemsProps,
   SpaceProps,
   ColorProps,
   HeightProps,
-  FlexProps
+  FlexProps,
+  BordersProps
 } from 'styled-system';
 
 export type FlexProps = FlexDirectionProps &
@@ -31,6 +33,7 @@ export type FlexProps = FlexDirectionProps &
   AlignItemsProps &
   SpaceProps &
   FlexProps &
+  BordersProps &
   React.HTMLProps<HTMLDivElement>;
 
 const Flex = styled<FlexProps, any>('div')`
@@ -47,6 +50,7 @@ const Flex = styled<FlexProps, any>('div')`
   ${height}
   ${minHeight}
   ${color}
+  ${borders}
 `;
 
 export default Flex;

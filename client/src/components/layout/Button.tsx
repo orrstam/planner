@@ -2,6 +2,7 @@ import * as React from 'react';
 import styled from 'styled-components';
 import {
   color,
+  space,
   WidthProps,
   SpaceProps,
   ColorProps,
@@ -12,23 +13,23 @@ export type ButtonProps = WidthProps &
   SpaceProps &
   ColorProps &
   BoxShadowProps &
+  SpaceProps &
   React.HTMLProps<HTMLDivElement>;
 
 const Button = styled<ButtonProps, any>('button')`
   border: 1px solid #ccc;
-  padding: 18px 25px;
   border-radius: 0;
   margin-top: 15px;
   border: none;
-  box-shadow: 1px 4px 15px -2px #ccc;
   font-size: 16px;
   cursor: pointer;
   width: 100%;
   background-color: rgba(226, 125, 96, 1);
   color: #fff;
-  ${color}
   font-weight: 900;
   letter-spacing: 0.07em;
+  ${color}
+  ${space}
 `;
 
 export default Button;
