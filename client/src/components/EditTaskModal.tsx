@@ -27,7 +27,7 @@ export default class EditTaskModal extends React.Component<
   ) => {
     setSubmitting(true);
 
-    // Only send type id to api
+    data.period = data.period.value;
     data.types = data.types.value;
 
     const response = await taskStore.updateTask(data);

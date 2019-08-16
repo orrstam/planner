@@ -138,7 +138,7 @@ const TaskForm: React.StatelessComponent<ITaskFormProps> = ({
               )}
             </Field>
 
-            {values['types'].label && values['types'].label === 'Exercise' && (
+            {values['types'] && values['types'].label === 'Exercise' && (
               <Field name="goal">
                 {({ form }) => (
                   <InputWrap>
