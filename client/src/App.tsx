@@ -44,7 +44,7 @@ export default class App extends React.Component<{}, {}> {
         flexDirection='column'
         bg='#fcfcfc'
         width='100vw'
-        height='100vh'
+        minHeight='100vh'
         p='0 10px'
       >
         <Switch>

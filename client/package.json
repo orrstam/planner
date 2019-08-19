@@ -18,7 +18,8 @@
     "react-router-dom": "^4.2.2",
     "react-scripts-ts": "2.16.0",
     "styled-components": "^3.4.9",
-    "styled-system": "^3.1.6"
+    "styled-system": "^3.1.6",
+    "victory": "^32.3.6"
   },
   "scripts": {
     "start": "react-scripts-ts start",
@@ -36,6 +37,7 @@
     "@types/react-dom": "^16.0.5",
     "@types/react-loadable": "^5.4.0",
     "@types/react-router-dom": "^4.2.7",
+    "@types/victory": "^31.0.21",
     "mobx-decorators": "^5.0.3",
     "typescript": "^3.1.2"
   }
