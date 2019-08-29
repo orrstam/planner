@@ -181,6 +181,13 @@
     "@types/bson" "*"
     "@types/node" "*"
 
+"@types/mongoose-delete@^0.5.0":
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/@types/mongoose-delete/-/mongoose-delete-0.5.0.tgz#3313573f429eeb09fcd7bbb8528575c2a2ca9a17"
+  integrity sha512-sUZtnp7VtVFjHfDZYZhRTPXJB4sSNRlN/PhqcPc9ZqIxJJ/qUqUvT2Y4f6v85nTci7jqeQ3Uw6HjxA+8TaNMqw==
+  dependencies:
+    "@types/mongoose" "*"
+
 "@types/mongoose-promise@^4.5.7":
   version "4.5.7"
   resolved "https://registry.yarnpkg.com/@types/mongoose-promise/-/mongoose-promise-4.5.7.tgz#f3fbeff96a27edbe2bf247f34ae2c63ec400478b"

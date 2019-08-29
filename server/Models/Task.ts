@@ -1,7 +1,8 @@
 import { Document, Schema, model } from 'mongoose';
+import{ SoftDeleteModel, SoftDeleteDocument } from 'mongoose-delete';
 const mongooseDelete = require('mongoose-delete');
 
-export interface ITask extends Document {
+export interface ITask extends SoftDeleteDocument {
   title: {
     type: String;
     required: Boolean;
@@ -46,4 +47,4 @@ taskSchema.plugin(mongooseDelete, {
   overrideMethods: ['count', 'find']
 });
 
-export default model<ITask>('Task', taskSchema);
+export default model<ITask, SoftDeleteModel<ITask>>('Task', taskSchema);
