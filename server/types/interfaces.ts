@@ -8,3 +8,10 @@ export interface IController {
   delete?(req: Request, res: Response): Promise<any>;
   restore?(req: Request, res: Response): Promise<any>;
 }
+
+export interface StravaActivity {
+  moving_time: number;
+  distance: number;
+  start_date: number;
+  type: string;
+}

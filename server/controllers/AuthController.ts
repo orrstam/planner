@@ -28,7 +28,7 @@ class AuthController implements IController {
 
       if (error) {
         // Handle error
-        msgObj = new Error(error);
+        msgObj = new Error('Error when trying to create user');
       }
 
       if (user) {

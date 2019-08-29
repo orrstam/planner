@@ -1,11 +1,14 @@
 import { Request, Response, NextFunction } from 'express';
 import * as strava from 'strava-v3';
+import { StravaActivity } from '../../types/interfaces';
 
 interface IStravaController {
   auth(req: Request, res: Response): Promise<any>;
   token(req: Request, res: Response): Promise<any> | void;
   athlete(req: Request, res: Response): Promise<any> | void;
 }
+
+
 
 class StravaController implements IStravaController {
   async auth(req: Request, res: Response): Promise<any> {
@@ -92,7 +95,9 @@ class StravaController implements IStravaController {
             throw Error(error);
           }
 
-          const filtered = data.filter(item => item.type === 'Run');
+          const filtered = data.filter((item: StravaActivity) => { 
+            return item.type === 'Run' 
+          });
 
           res.send(filtered);
         }
