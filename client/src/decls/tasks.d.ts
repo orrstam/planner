@@ -21,7 +21,7 @@ declare namespace Planner.Tasks.Forms {
     title: string,
     text: string,
     period: { label: any, value: any },
-    goal?: number,
+    goal: number,
     types: any
   }
   interface Option {

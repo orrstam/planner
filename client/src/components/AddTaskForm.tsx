@@ -70,7 +70,8 @@ export default class AddTaskForm extends React.Component<IAddTaskFormProps> {
       title: '',
       text: '',
       period: { value: 'day', label: 'Day' },
-      types: []
+      types: [],
+      goal: 0
     };
 
     return (

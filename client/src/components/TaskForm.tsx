@@ -77,7 +77,11 @@ const TaskForm: React.StatelessComponent<ITaskFormProps> = ({
         initialValues={initialValues}
         validate={validate}
       >
-        {({ handleSubmit, isSubmitting, values }) => (
+        {({
+          handleSubmit,
+          isSubmitting,
+          values
+        }: FormikProps<Planner.Tasks.Forms.SubmitValues>) => (
           <Form onSubmit={handleSubmit}>
             <Field name="title">
               {({ field, form }) => (
@@ -138,15 +142,19 @@ const TaskForm: React.StatelessComponent<ITaskFormProps> = ({
               )}
             </Field>
 
-            {values['types'] && values['types'].label === 'Exercise' && (
+            {(values.types && values.types.label === 'Exercise') ||
+            values.goal ? (
               <Field name="goal">
-                {({ form }) => (
+                {({ form, field }) => (
                   <InputWrap>
                     <Input
-                      onChange={(e: any) => { form.setFieldValue('goal', e.target.value) }}
+                      onChange={(e: any) => {
+                        form.setFieldValue('goal', e.target.value);
+                      }}
                       width="50%"
                       type="number"
                       placeholder="Set Goal (km)"
+                      {...field}
                     />{' '}
                     km
                     <ErrorMessage>
@@ -155,7 +163,8 @@ const TaskForm: React.StatelessComponent<ITaskFormProps> = ({
                   </InputWrap>
                 )}
               </Field>
-            )}
+            ) : null}
+
             <Button type="submit" disabled={isSubmitting}>
               Save
             </Button>
