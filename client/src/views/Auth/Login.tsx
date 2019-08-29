@@ -111,7 +111,7 @@ const Login: React.FC<ILoginProps> = () => {
               </InputWrap>
             )}
           </Field>
-          <Button type='submit'>Login</Button>
+          <Button p="15px 0" type='submit'>Login</Button>
         </Form>
       </Formik>
     </Flex>
