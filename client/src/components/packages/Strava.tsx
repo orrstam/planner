@@ -148,6 +148,8 @@ const Strava: React.FC<{}> = () => {
       width="100%"
       alignItems="center"
       flexDirection="column"
+      boxShadow="1px 4px 15px -2px #ccc"
+      mb="25px"
     >
       <Box>
         <ProfileWrapper>
@@ -160,6 +162,10 @@ const Strava: React.FC<{}> = () => {
         fontSize="16px"
         color="text"
         mb="15px"
+        bg="#fcfcfc"
+        borderTop="1px solid #dcdcdc"
+        borderBottom="1px solid #dcdcdc"
+        p="20px 0"
       >
         {stats && (
           <>
