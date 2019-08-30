@@ -1,9 +1,17 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import { Formik, Form, Field, FormikActions, FormikErrors } from 'formik';
+import { Formik, Form, Field, FormikActions } from 'formik';
+import * as Yup from 'yup';
 import { Flex, Input, Button } from '../../components/layout';
 import { UserStore, userStore } from '../../stores/';
 import { Redirect } from 'react-router';
+
+const loginFormValidation = Yup.object().shape({
+  username: Yup.string()
+    .required('Required'),
+  password: Yup.string()
+    .required('Required')
+});
 
 const InputWrap = styled.div`
   margin-bottom: 15px;
@@ -54,18 +62,6 @@ const Login: React.FC<ILoginProps> = () => {
     }
   };
 
-  const validate = (values: Planner.Users.Forms.SubmitValues) => {
-    let errors: FormikErrors<any> = {};
-
-    Object.keys(values).forEach(key => {
-      if (!values[key]) {
-        errors[key] = 'Required';
-      }
-    });
-
-    return errors;
-  };
-
   if (redirectTo && typeof redirectTo === 'string') {
     return <Redirect to={redirectTo} />;
   }
@@ -75,7 +71,7 @@ const Login: React.FC<ILoginProps> = () => {
       <Formik
         onSubmit={handleSubmit}
         initialValues={{ username: 'orrstam@itiden.se', password: '' }}
-        validate={validate}
+        validationSchema={loginFormValidation}
       >
         <Form style={{ width: '60%', alignSelf: 'center' }}>
           <Field name='username'>

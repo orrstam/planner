@@ -1,15 +1,38 @@
 import * as React from 'react';
-import {
-  Formik,
-  Form,
-  Field,
-  FormikErrors,
-  FormikProps,
-  FieldProps
-} from 'formik';
+import { Formik, Form, Field, FormikProps, FieldProps } from 'formik';
+import * as Yup from 'yup';
 import styled from 'styled-components';
 import Select from 'react-select';
 import { Box, Input } from '../components/layout';
+
+const taskFormValidation = Yup.object().shape({
+  title: Yup.string()
+    .max(50, 'Title too long!')
+    .required('Required'),
+  text: Yup.string().required('Required'),
+  types: Yup.mixed().test(
+    'is-valid-type',
+    'You must select a type',
+    (value) => { 
+      if (value.length) {
+        return value[0].label && value[0].value;
+      } else {
+        return value.label && value.value;
+      }
+     },
+  ),
+
+  goal: Yup.number().when('types', {
+    is: (value) => {
+      return value && value.label === 'Exercise';
+    },
+    then: Yup.number()
+      .min(
+        1,
+        'There must be a value greater than 0'
+      )
+  })
+});
 
 const InputWrap = styled.div`
   margin-bottom: 15px;
@@ -60,14 +83,12 @@ const customStyles = {
 interface ITaskFormProps {
   handleSubmit: (data: Planner.Tasks.Forms.SubmitValues, {}) => Promise<void>;
   initialValues: Planner.Tasks.Forms.SubmitValues;
-  validate: (values: Planner.Tasks.Forms.SubmitValues) => FormikErrors<any>;
   types?: Planner.Tasks.Forms.Option[];
 }
 
 const TaskForm: React.StatelessComponent<ITaskFormProps> = ({
   handleSubmit,
   initialValues,
-  validate,
   types
 }) => {
   return (
@@ -75,7 +96,7 @@ const TaskForm: React.StatelessComponent<ITaskFormProps> = ({
       <Formik
         onSubmit={handleSubmit}
         initialValues={initialValues}
-        validate={validate}
+        validationSchema={taskFormValidation}
       >
         {({
           handleSubmit,
@@ -127,7 +148,6 @@ const TaskForm: React.StatelessComponent<ITaskFormProps> = ({
                 <Select
                   value={field.value}
                   onChange={(e: any) => {
-                    console.log('e ', e);
                     form.setFieldValue('period', e);
                   }}
                   options={[

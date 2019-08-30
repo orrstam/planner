@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { FormikActions, FormikErrors } from 'formik';
+import { FormikActions } from 'formik';
 import { modalStore, taskStore, uiStore } from '../stores';
 import { observer } from 'mobx-react';
 import Modal from '../components/Modal';
@@ -48,18 +48,6 @@ export default class EditTaskModal extends React.Component<
     }, 2000);
   };
 
-  validate(values: Planner.Tasks.Forms.SubmitValues) {
-    let errors: FormikErrors<any> = {};
-
-    Object.keys(values).forEach(key => {
-      if (!values[key]) {
-        errors[key] = 'Required';
-      }
-    });
-
-    return errors;
-  }
-
   clickHandler = () => {
     modalStore.setShowTaskModal('');
   };
@@ -86,7 +74,6 @@ export default class EditTaskModal extends React.Component<
                 types: [{ value: task.types[0]._id, label: task.types[0].name }]
               }}
               handleSubmit={this.handleSubmit}
-              validate={this.validate}
               types={helpers.getOptionsFromTypes(this.props.types)}
             />
           </Box>
