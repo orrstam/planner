@@ -86,22 +86,22 @@ const Strava: React.FC<{}> = () => {
 
   React.useEffect(() => {
     async function getAthlete() {
-      const athlete = await stravaStore.fetchAthlete();
+      const athleteResponse = await stravaStore.fetchAthlete();
 
-      setAthlete(athlete);
+      setAthlete(athleteResponse);
     }
     getAthlete();
   }, []);
 
   React.useEffect(() => {
     async function getStats() {
-      const stats = await api.get('/packages/strava/athlete/stats', {
+      const statsResponse = await api.get('/packages/strava/athlete/stats', {
         params: {
           access_token: stravaStore.accessToken
         },
         headers: { Authorization: `Bearer ${getToken()}` }
       });
-      setStats(stats.data.all_run_totals);
+      setStats(statsResponse.data.all_run_totals);
     }
 
     getStats();
