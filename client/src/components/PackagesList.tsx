@@ -14,9 +14,15 @@ const PackagesList: React.FC<{}> = () => {
   React.useEffect(() => {
     setPackages([]);
     userStore.authenticate().then(user => {
-      setPackages(user.data.packages);
+      if (user.data && user.data.packages) {
+        setPackages(user.data.packages);
+      }
     });
   }, []);
+
+  if (!packages.length) {
+    return null;
+  }
 
   return (
     <Flex>
