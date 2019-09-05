@@ -6,3 +6,5 @@ export { default as Input } from './Input';
 export { default as Button } from './Button';
 export { default as Logo } from './Logo';
 export { default as ProfileWrapper } from './ProfileWrapper';
+export { default as StyledLink } from './StyledLink';
+export { default as InternalLink } from './InternalLink';

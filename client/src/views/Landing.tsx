@@ -1,10 +1,9 @@
 import * as React from 'react';
 import { inject, observer } from 'mobx-react';
-import { Link } from 'react-router-dom';
 import { TaskStore, TypeStore, uiStore } from '../stores/';
 import TasksList from '../components/TasksList';
 import Filter from '../components/Filter';
-import { Flex, Box } from '../components/layout';
+import { Flex, Box, InternalLink } from '../components/layout';
 import { PackagesList } from '../components/PackagesList';
 import Icon from '../components/Icon';
 
@@ -61,7 +60,7 @@ export default class Landing extends React.Component<LandingViewProps> {
           types={this.props.typeStore.types.slice()}
         />
         <Box mb='defaultMargin' color='error'>
-          <Link to='/packages'>Packages</Link>
+          <InternalLink color="linkInverted" to='/packages'>Packages</InternalLink>
         </Box>
         <PackagesList />
       </Flex>
