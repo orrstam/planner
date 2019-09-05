@@ -49,6 +49,8 @@ export function useComparisonStats(search: boolean, period: moment.unitOfTime.St
   const currentDates = getPeriodDates(period as string);
 
   React.useEffect(() => {
+    let mounted = true;
+
     async function fetchStats() {
       const response = await stravaStore.getActivitiesByDates(currentDates.before, currentDates.after);
 
@@ -63,13 +65,19 @@ export function useComparisonStats(search: boolean, period: moment.unitOfTime.St
         if (comparisonResponse) {
           const comparison = mapResponseData(comparisonResponse);
 
-          setStats( { current: current, comparison: comparison, done: true } );
+          if (mounted) {
+            setStats( { current: current, comparison: comparison, done: true } );
+          }
         }
       }
     }
 
     if (stravaStore.accessToken && search) {
       fetchStats();
+    }
+
+    return () => {
+      mounted = false;
     }
   }, [stravaStore.accessToken, search, period]);
 

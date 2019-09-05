@@ -17,6 +17,8 @@ export function useStrava(code: string | undefined) {
   });
 
   React.useEffect(() => {
+    let mounted = true;
+
     async function fetchToken() {
       const response = await api.get('/packages/strava/token', {
         params: { code }
@@ -33,7 +35,9 @@ export function useStrava(code: string | undefined) {
           { headers: { Authorization: `Bearer ${getToken()}` } }
         );
 
-        setAthlete(response.data.athlete);
+        if (mounted) {
+          setAthlete(response.data.athlete);
+        }
       }
     }
 
@@ -45,7 +49,7 @@ export function useStrava(code: string | undefined) {
           setAthlete({data: {}, done: true});
         }
 
-        if (!athlete.message) {
+        if (!athlete.message && mounted) {
           setAthlete({
             data: { firstname: athlete.firstname, lastname: athlete.lastname },
             done: true
@@ -60,6 +64,10 @@ export function useStrava(code: string | undefined) {
       fetchToken();
     } else {
       fetchAthlete();
+    }
+
+    return () => {
+      mounted = false;
     }
   }, [code]);
 

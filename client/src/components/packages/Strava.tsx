@@ -4,21 +4,25 @@ import CountUp from 'react-countup';
 import Select from 'react-select';
 import * as moment from 'moment';
 import { stravaStore } from '../../stores';
-import api, { getToken } from '../../services/api';
+import { getToken } from '../../services/api';
 import { Flex, Box, ProfileWrapper, Button } from '../layout';
 import { ExerciseGoals } from './ExerciseGoals';
 import { useComparisonStats } from '../../hooks/useComparisonStats';
 import { distanceToKm, secondsTimeObject } from '../../services/helpers';
 import Icon from '../Icon';
 
+import { useApiCall } from '../../hooks/useApiCall';
+
 const Image = styled.img`
   width: 100%;
   height: auto;
 `;
 interface IStats {
-  count: number;
-  distance: number;
-  moving_time: number;
+  all_run_totals: {
+    count: number;
+    distance: number;
+    moving_time: number;
+  };
 }
 
 interface IStatsData {
@@ -72,7 +76,6 @@ const StatsTableRow = (props: {
 
 const Strava: React.FC<{}> = () => {
   const [athlete, setAthlete] = React.useState();
-  const [stats, setStats] = React.useState<IStats>();
   const [loadComparisonStats, setLoadComparisonStats] = React.useState<boolean>(
     false
   );
@@ -83,29 +86,33 @@ const Strava: React.FC<{}> = () => {
     loadComparisonStats,
     comparisonPeriod.value as moment.unitOfTime.StartOf
   );
+  const stats: IStats = useApiCall(
+    '/packages/strava/athlete/stats',
+    {
+      params: {
+        access_token: stravaStore.accessToken
+      },
+      headers: { Authorization: `Bearer ${getToken()}` }
+    },
+    athlete
+  );
 
   React.useEffect(() => {
+    let mounted = true;
     async function getAthlete() {
       const athleteResponse = await stravaStore.fetchAthlete();
 
-      setAthlete(athleteResponse);
+      if (mounted) {
+        setAthlete(athleteResponse);
+      }
     }
+
     getAthlete();
+
+    return () => {
+      mounted = false;
+    };
   }, []);
-
-  React.useEffect(() => {
-    async function getStats() {
-      const statsResponse = await api.get('/packages/strava/athlete/stats', {
-        params: {
-          access_token: stravaStore.accessToken
-        },
-        headers: { Authorization: `Bearer ${getToken()}` }
-      });
-      setStats(statsResponse.data.all_run_totals);
-    }
-
-    getStats();
-  }, [athlete]);
 
   const showMoreStats = () => {
     setLoadComparisonStats(true);
@@ -167,20 +174,20 @@ const Strava: React.FC<{}> = () => {
         borderBottom="1px solid #dcdcdc"
         p="20px 0"
       >
-        {stats && (
+        {stats && stats.all_run_totals && (
           <>
             <Flex flex="1" alignItems="center" flexDirection="column">
               <Box fontSize="13px" color="textLight" mb="5px">
                 Runs
               </Box>
-              <CountUp end={stats.count} />
+              <CountUp end={stats.all_run_totals.count} />
             </Flex>
             <Flex flex="1" alignItems="center" flexDirection="column">
               <Box fontSize="13px" color="textLight" mb="5px">
                 Distance
               </Box>
               <CountUp
-                end={distanceToKm(stats.distance)}
+                end={distanceToKm(stats.all_run_totals.distance)}
                 suffix=" km"
                 decimals={2}
               />
@@ -191,12 +198,16 @@ const Strava: React.FC<{}> = () => {
               </Box>
               <Flex flexWrap="wrap">
                 <CountUp
-                  end={secondsTimeObject(stats.moving_time).hours}
+                  end={
+                    secondsTimeObject(stats.all_run_totals.moving_time).hours
+                  }
                   suffix=" h"
                   style={{ marginRight: '5px' }}
                 />
                 <CountUp
-                  end={secondsTimeObject(stats.moving_time).minutes}
+                  end={
+                    secondsTimeObject(stats.all_run_totals.moving_time).minutes
+                  }
                   suffix=" min"
                 />
               </Flex>
@@ -286,7 +297,7 @@ const Strava: React.FC<{}> = () => {
           onClick={showMoreStats}
           mt="5px"
         >
-          <Icon color="#7f7f7f" onClick={ close } icon={'angle-down'} size="2x" />
+          <Icon color="#7f7f7f" onClick={close} icon={'angle-down'} size="2x" />
         </Button>
       )}
     </Flex>

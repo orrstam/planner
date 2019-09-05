@@ -30,6 +30,8 @@ export function useExerciseGoals() {
   const [goals, setGoals] = React.useState<IGoalItem[]>();
 
   React.useEffect(() => {
+    let mounted = true;
+
     async function fetchGoals() {
       try {
         const taskStore = new TaskStore();
@@ -64,7 +66,10 @@ export function useExerciseGoals() {
 
         Promise.all(res).then(completed => {
           const filtered = completed.filter(task => task.goal.distance);
-          setGoals(filtered);
+
+          if (mounted) {
+            setGoals(filtered);
+          }
         });
       } catch (error) {
         // Handle error
@@ -72,6 +77,10 @@ export function useExerciseGoals() {
     }
 
     fetchGoals();
+
+    return () => {
+      mounted = false;
+    }
   }, []);
 
   return goals;
