@@ -2,8 +2,19 @@ import * as React from 'react';
 import api, { getToken } from '../services/api';
 import { userStore, stravaStore } from '../stores/';
 
+interface AthleteProps {
+  data: {
+    firstname?: string;
+    lastname?: string;
+  };
+  done: boolean;
+}
+
 export function useStrava(code: string | undefined) {
-  const [athlete, setAthlete] = React.useState();
+  const [athlete, setAthlete] = React.useState<AthleteProps>({
+    data: {},
+    done: false
+  });
 
   React.useEffect(() => {
     async function fetchToken() {
@@ -30,8 +41,15 @@ export function useStrava(code: string | undefined) {
       try {
         const athlete = await stravaStore.fetchAthlete();
 
+        if (!athlete) {
+          setAthlete({data: {}, done: true});
+        }
+
         if (!athlete.message) {
-          setAthlete(athlete);
+          setAthlete({
+            data: { firstname: athlete.firstname, lastname: athlete.lastname },
+            done: true
+          });
         }
       } catch (error) {
         //
