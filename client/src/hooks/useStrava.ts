@@ -1,5 +1,5 @@
 import * as React from 'react';
-import api, { getToken } from '../services/api';
+import api from '../services/api';
 import { userStore, stravaStore } from '../stores/';
 
 interface AthleteProps {
@@ -31,8 +31,7 @@ export function useStrava(code: string | undefined) {
             id: userStore.activeUser,
             stravaToken: response.data.access_token,
             packages: 'strava'
-          },
-          { headers: { Authorization: `Bearer ${getToken()}` } }
+          }
         );
 
         if (mounted) {

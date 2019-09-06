@@ -4,7 +4,6 @@ import CountUp from 'react-countup';
 import Select from 'react-select';
 import * as moment from 'moment';
 import { stravaStore } from '../../stores';
-import { getToken } from '../../services/api';
 import { Flex, Box, ProfileWrapper, Button } from '../layout';
 import { ExerciseGoals } from './ExerciseGoals';
 import { useComparisonStats } from '../../hooks/useComparisonStats';
@@ -92,11 +91,9 @@ const Strava: React.FC<{}> = () => {
       params: {
         access_token: stravaStore.accessToken
       },
-      headers: { Authorization: `Bearer ${getToken()}` }
     },
     athlete
   );
-
   React.useEffect(() => {
     let mounted = true;
     async function getAthlete() {

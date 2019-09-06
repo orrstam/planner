@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as moment from 'moment';
 import { distanceToKm, secondsToMinutes } from '../services/helpers';
-import api, { getToken } from '../services/api';
+import api from '../services/api';
 import {stravaStore} from '../stores/StravaStore';
 
 interface ISplits {
@@ -23,8 +23,7 @@ export function useStravaSplits(splitsSearch: boolean): ISplits | undefined {
         params: {
           access_token: stravaStore.accessToken,
           page: 1,
-        },
-        headers: { Authorization: `Bearer ${getToken()}` }
+        }
       });
 
       if (response && response.data) {

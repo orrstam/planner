@@ -1,5 +1,5 @@
 import { observable } from 'mobx';
-import api, { getToken } from '../services/api';
+import api from '../services/api';
 import { AxiosResponse } from 'axios';
 
 export default class TypeStore {
@@ -18,9 +18,7 @@ export default class TypeStore {
 
   async fetch(): Promise<any> {
     try {
-      const data: AxiosResponse = await api.get('types', {
-        headers: { Authorization: `Bearer ${getToken()}` }
-      });
+      const data: AxiosResponse = await api.get('types');
 
       if (data.status !== 200) {
         throw data;

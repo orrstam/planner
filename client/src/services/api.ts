@@ -26,6 +26,18 @@ api.interceptors.response.use(
   }
 );
 
+api.interceptors.request.use(
+  response => {
+    const token = getToken();
+    if (token) {
+      response.headers.Authorization = `Bearer ${token}`;
+    }
+
+    return response;
+  },
+  err => Promise.reject(err)
+);
+
 function getToken(): string | null {
   return localStorage.getItem('token');
 }

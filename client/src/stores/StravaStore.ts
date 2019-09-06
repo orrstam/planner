@@ -1,6 +1,6 @@
 import { observable, action } from 'mobx';
 import * as moment from 'moment';
-import api, { getToken } from '../services/api';
+import api from '../services/api';
 import { userStore } from './';
 
 export default class StravaStore {
@@ -15,8 +15,7 @@ export default class StravaStore {
     try {
       const user = await userStore.authenticate();
       const response = await api.get('/packages/strava/athlete', {
-        params: { access_token: user.data.stravaToken },
-        headers: { Authorization: `Bearer ${getToken()}` }
+        params: { access_token: user.data.stravaToken }
       });
 
       if (response.status === 200 && response.data) {
@@ -37,8 +36,7 @@ export default class StravaStore {
           page: 1,
           before: b.unix(),
           after: a.unix()
-        },
-        headers: { Authorization: `Bearer ${getToken()}` }
+        }
       });
 
       if (response.status === 200 && response.data) {

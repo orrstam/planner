@@ -12,9 +12,7 @@ export default class UserStore {
   @action
   async authenticate(): Promise<any> {
     if (getToken()) {
-      const response = await api.get('/users/user', {
-        headers: { Authorization: `Bearer ${getToken()}` }
-      });
+      const response = await api.get('/users/user');
 
       if (response && response.status === 200) {
         this.setActiveUser(response.data._id);

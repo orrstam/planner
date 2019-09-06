@@ -1,5 +1,5 @@
 import { observable, action, transaction } from 'mobx';
-import api, { getToken } from '../services/api';
+import api from '../services/api';
 
 export default class TaskStore {
   @observable taskList: Planner.Tasks.Task[] = [];
@@ -80,9 +80,7 @@ export default class TaskStore {
 
   async updateTask(task: Planner.Tasks.Task): Promise<any> {
     try {
-      const response = await api.put('/', task, {
-        headers: { Authorization: `Bearer ${getToken()}` }
-      });
+      const response = await api.put('/', task);
 
       this.addOrUpdateTask(response.data);
 
@@ -107,9 +105,7 @@ export default class TaskStore {
     const endpoint = this.fetchDeleted ? 'deleted' : '/';
 
     try {
-      const data = await api.get(endpoint, {
-        headers: { Authorization: `Bearer ${getToken()}` }
-      });
+      const data = await api.get(endpoint);
 
       if (data.status !== 200) {
         throw data;
