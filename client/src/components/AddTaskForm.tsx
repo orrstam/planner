@@ -1,11 +1,10 @@
 import * as React from 'react';
 import { FormikActions } from 'formik';
-import { inject } from 'mobx-react';
+import { inject, observer } from 'mobx-react';
 import { TaskStore, UIStore, UserStore } from '../stores/';
 import TaskForm from '../components/TaskForm';
 import helpers from '../services/helpers';
 import { Box } from './layout';
-import FormSuccess from './FormSuccess';
 export interface IAddTaskFormProps {
   taskStore?: TaskStore;
   userStore?: UserStore;
@@ -14,6 +13,7 @@ export interface IAddTaskFormProps {
 }
 
 @inject('taskStore', 'userStore')
+@observer
 export default class AddTaskForm extends React.Component<IAddTaskFormProps> {
   handleSubmit = async (
     data: Planner.Tasks.Forms.SubmitValues,
@@ -64,7 +64,6 @@ export default class AddTaskForm extends React.Component<IAddTaskFormProps> {
 
     return (
       <Box>
-        <FormSuccess formSuccess={this.props.uiStore.formSuccess} />
         <TaskForm
           initialValues={initialValues}
           handleSubmit={this.handleSubmit}

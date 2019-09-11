@@ -3,11 +3,11 @@ import styled, { css } from 'styled-components';
 import Icon from './Icon';
 
 interface IFormSuccessProps {
-  formSuccess: boolean
+  formSuccess: boolean;
 }
 
 interface IIconWrapperProps {
-  show: boolean
+  show: boolean;
 }
 
 const IconWrapper = styled.div`
@@ -17,21 +17,24 @@ const IconWrapper = styled.div`
   margin-top: -32px;
   top: 50%;
   opacity: 0;
-  transition: opacity 1s linear .5s;
+  transition: opacity 1s linear 0.5s;
   ${(props: IIconWrapperProps) => (props.show ? showStyle : '')}
 `;
 
 const showStyle = css`
   opacity: 1;
   visibility: visible;
+  z-index: 999;
 `;
 
-const FormSuccess: React.StatelessComponent<IFormSuccessProps> = ({formSuccess}) => {
-  return(
-    <IconWrapper show={(formSuccess) ? true : false}>
+const FormSuccess: React.StatelessComponent<IFormSuccessProps> = ({
+  formSuccess
+}) => {
+  return (
+    <IconWrapper show={formSuccess ? true : false}>
       <Icon icon="check" color="rgba(149, 195, 141, 1)" size="6x" />
     </IconWrapper>
-  )
-}
+  );
+};
 
 export default FormSuccess;
