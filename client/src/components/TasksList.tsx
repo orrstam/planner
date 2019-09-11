@@ -1,8 +1,9 @@
 import * as React from 'react';
 import { Box } from './layout/'
 import AddTaskForm from './AddTaskForm';
-import { taskStore, modalStore, uiStore } from '../stores';
+import { uiStore } from '../stores';
 import TaskItem from './TaskItem';
+import FormSuccess from './FormSuccess';
 import { observer } from 'mobx-react';
 
 interface ITaskListProps {
@@ -16,36 +17,14 @@ const TasksList: React.StatelessComponent<ITaskListProps> = ({
 }) => {
   return (
     <Box>
+      <FormSuccess formSuccess={uiStore.formSuccess} />
       <Box style={ (!uiStore.showTaskForm) ? { display: 'none' } : {}}>
         <AddTaskForm uiStore={uiStore} types={types} />
       </Box>
 
       { tasks.map((task, key) => {
-
-        const deleteTask = async () => {
-          if (task._id) {
-            await taskStore.deleteTask(task._id);
-          }
-        }
-
-        const editTask = async () => {
-          if (task._id) {
-            modalStore.setShowTaskModal(task._id);
-          }
-        }
-
-        const trashIcon: Planner.Tasks.Icon = {
-          icon: 'trash-alt',
-          onClick: deleteTask
-        }
-
-        const EditIcon: Planner.Tasks.Icon = {
-          icon: 'edit',
-          onClick: editTask
-        }
-
         return (
-          <TaskItem types={types} task={task} key={key} icons={[ trashIcon, EditIcon ]} />
+          <TaskItem types={types} task={task} key={key} />
           )
         }) }
     </Box>
