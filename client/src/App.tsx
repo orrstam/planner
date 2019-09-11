@@ -11,12 +11,6 @@ const Landing = Loadable({
   delay: 200
 });
 
-const RemovedItems = Loadable({
-  loader: () => import('./views/RemovedItems'),
-  loading: Loader,
-  delay: 200
-});
-
 const Packages = Loadable({
   loader: () => import('./views/Packages'),
   loading: Loader
@@ -53,7 +47,6 @@ export default class App extends React.Component<{}, {}> {
           <Route exact={true} path='/register' component={Register} />
           <PrivateRoute exact={true} path='/' component={Landing} />
           <PrivateRoute path='/packages' component={Packages} />
-          <PrivateRoute path='/removed-tasks' component={RemovedItems} />
         </Switch>
       </Flex>
     );

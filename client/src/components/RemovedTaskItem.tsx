@@ -10,24 +10,12 @@ interface IRemovedTaskItemProps {
 const TaskWrapper = styled.div``;
 
 const RemovedTaskItem: React.StatelessComponent<IRemovedTaskItemProps> = ({
-  task,
-  taskStore
+  task
 }) => {
-
-  const clickHandler = async () => {
-    if (task._id) {
-      await taskStore!.restoreTask(task._id);
-    }
-  }
-
-  const undoIcon: Planner.Tasks.Icon = {
-    icon: 'undo',
-    onClick: clickHandler
-  }
 
   return (
     <TaskWrapper>
-      <TaskItem task={task} icons={[undoIcon]} />
+      <TaskItem task={task} />
     </TaskWrapper>
   )
 }
