@@ -5,7 +5,8 @@ require('dotenv').config({ path: './.env' });
 
 mongoose.connect(process.env.DB_HOST, {
   useNewUrlParser: true,
-  useCreateIndex: true
+  useCreateIndex: true,
+  useFindAndModify: false
 });
 mongoose.connection.on('error', err => {
   console.error(`🙅 🚫 🙅 🚫 🙅 🚫 🙅 🚫 → ${err.message}`);
