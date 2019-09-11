@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import {
   color,
   space,
+  width,
   WidthProps,
   SpaceProps,
   ColorProps,
@@ -23,11 +24,11 @@ const Button = styled<ButtonProps, any>('button')`
   border: none;
   font-size: 16px;
   cursor: pointer;
-  width: 100%;
   background-color: rgba(226, 125, 96, 1);
   color: #fff;
   font-weight: 900;
   letter-spacing: 0.07em;
+  ${width}
   ${color}
   ${space}
 `;

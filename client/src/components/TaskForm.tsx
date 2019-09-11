@@ -108,6 +108,8 @@ const TaskForm: React.StatelessComponent<ITaskFormProps> = ({
               {({ field, form }) => (
                 <InputWrap>
                   <Input
+                    fontSize="16px"
+                    p="15px"
                     width="100%"
                     type="text"
                     {...field}
@@ -173,6 +175,8 @@ const TaskForm: React.StatelessComponent<ITaskFormProps> = ({
                       }}
                       width="50%"
                       type="number"
+                      p="15px"
+                      fontSize="16px"
                       placeholder="Set Goal (km)"
                       {...field}
                     />{' '}

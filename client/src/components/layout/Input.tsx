@@ -3,23 +3,33 @@ import styled from 'styled-components'
 import {
   space,
   bgColor,
+  color,
   size,
+  fontSize,
   width,
   SpaceProps,
   ColorProps,
   WidthProps,
+  FontSizeProps
 } from 'styled-system';
+
+interface CustomInputProps {
+  edit?: boolean;
+}
 
 export type InputProps = SpaceProps
   & ColorProps
-  & React.HTMLProps<HTMLInputElement>
-  & WidthProps;
+  & WidthProps
+  & CustomInputProps
+  & FontSizeProps
+  & React.HTMLProps<HTMLInputElement>;
 
 const Input = styled<InputProps, any>('input')`
-  padding: 15px;
-  font-size: 16px;
   border: none;
-  box-shadow: 1px 4px 15px -2px #ccc;
+  border-bottom: ${props => props.edit && '1px solid #ccc'};
+  box-shadow: ${props => props.edit ? '' : '1px 4px 15px -2px #ccc'};
+  ${color}
+  ${fontSize}
   ${space}
   ${bgColor}
   ${size}

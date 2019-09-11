@@ -12,7 +12,7 @@ const TaskType: React.StatelessComponent<ITaskTypeProps> = ({
 }) => {
   return (
     <Box position="absolute" mt="-25px" ml="-15px">
-      <Circle position="absolute" border="5px solid #fcfcfc" bg={`rgba(${theme.taskTypes.colors[type.name]}, 1)`} size="35px" />
+      <Circle position="absolute" border="5px solid #fcfcfc" bg={`rgba(${theme.colors[type.name]}, 1)`} size="35px" />
     </Box>
   )
 }

@@ -9,7 +9,8 @@ import {
   faPlusCircle,
   faMinusCircle,
   faCheck,
-  faAngleDown
+  faAngleDown,
+  faAngleUp
 } from '@fortawesome/free-solid-svg-icons';
 import { Icon, library, IconProp } from '@fortawesome/fontawesome-svg-core';
 library.add({
@@ -20,31 +21,33 @@ library.add({
   faPlusCircle,
   faMinusCircle,
   faCheck,
-  faAngleDown
+  faAngleDown,
+  faAngleUp
 });
 
 const IconWrapper = styled.div`
   cursor: pointer;
   display: inline-block;
-  margin-left: 8px;
 `;
 
 interface IIConProps {
   icon: IconProp,
   onClick?: (e: any) => void,
   size?: any,
-  color: string
+  color: string,
+  space?: string
 }
 
 const Icon: React.StatelessComponent<IIConProps> = ({
   icon,
   onClick,
   size,
-  color
+  color,
+  space
 }) => {
   return (
     <IconWrapper onClick={onClick}>
-      <FontAwesomeIcon size={(size) ? size : '1x'} style={{ color: color }} icon={icon} />
+      <FontAwesomeIcon size={(size) ? size : '1x'} style={{ color: color, zIndex: 9999, margin: space }} icon={icon} />
     </IconWrapper>
   )
 }

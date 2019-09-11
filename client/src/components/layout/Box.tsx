@@ -9,11 +9,13 @@ import {
   position,
   textAlign,
   fontSize,
+  borders,
   WidthProps,
   SpaceProps,
   ColorProps,
   TextAlignProps,
-  BoxShadowProps
+  BoxShadowProps,
+  BorderProps
 } from 'styled-system';
 
 interface StyleProps {
@@ -26,6 +28,7 @@ export type BoxProps = WidthProps &
   TextAlignProps &
   BoxShadowProps &
   StyleProps &
+  BorderProps &
   React.HTMLProps<HTMLDivElement>;
 
 const foo = keyframes`
@@ -48,6 +51,7 @@ const Box = styled<BoxProps, any>('div')`
   ${fontSize}
   ${position}
   ${boxShadow}
+  ${borders}
 `;
 
 export default Box;

@@ -56,14 +56,14 @@ const TypesSelect: React.StatelessComponent<ITypesSelectProps> = ({
     }),
     multiValueRemove: (base: any, data: any) => ({
       ...base,
-      backgroundColor: `rgba(${theme.taskTypes.colors[data.data.label]}, .5)`,
+      backgroundColor: `rgba(${theme.colors[data.data.label]}, .5)`,
       ':hover': {
-        backgroundColor: `rgba(${theme.taskTypes.colors[data.data.label]}, 1)`,
+        backgroundColor: `rgba(${theme.colors[data.data.label]}, 1)`,
         color: '#333'
       }
     }),
     multiValue: (styles: any, data: any) => {
-      const color = theme.taskTypes.colors[data.data.label];
+      const color = theme.colors[data.data.label];
 
       return {
         ...styles,

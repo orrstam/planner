@@ -9,14 +9,10 @@ const theme = {
     linkInverted: 'rgba(226,125,96,1)',
     error: '#ad5b5b',
     text: '#333',
-    textLight: 'rgba(51, 51, 51, 0.4)'
-  },
-  taskTypes: {
-    colors: {
-      'Home Improvement': '226,125,96',
-      Development: '65,179,163',
-      Exercise: '195,141,158'
-    }
+    textLight: 'rgba(51, 51, 51, 0.4)',
+    'Home Improvement': '226,125,96',
+    Development: '65,179,163',
+    Exercise: '195,141,158'
   }
 };
 

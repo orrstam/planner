@@ -82,6 +82,8 @@ const Login: React.FC<ILoginProps> = () => {
                   {...field}
                   placeholder='Email'
                   width='100%'
+                  fontSize="16px"
+                  p="15px"
                 />
                 <ErrorMessage>
                   {form.touched.username && form.errors.username}
@@ -97,6 +99,8 @@ const Login: React.FC<ILoginProps> = () => {
                   {...field}
                   placeholder='Password'
                   width='100%'
+                  fontSize="16px"
+                  p="15px"
                 />
                 {form.errors && form.errors.length ? (
                   <ErrorMessage>{form.errors}</ErrorMessage>
@@ -107,7 +111,7 @@ const Login: React.FC<ILoginProps> = () => {
               </InputWrap>
             )}
           </Field>
-          <Button p="15px 0" type='submit'>Login</Button>
+          <Button width="100%" p="15px 0" type='submit'>Login</Button>
         </Form>
       </Formik>
     </Flex>
