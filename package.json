@@ -82,7 +82,7 @@
     "mobx": "^5.9.4",
     "mobx-react": "^5.0.0",
     "moment": "^2.22.2",
-    "mongoose": "^5.2.8",
+    "mongoose": "^5.7.5",
     "mongoose-delete": "^0.4.0",
     "mongoose-type-email": "^1.0.10",
     "passport": "^0.4.0",
