@@ -81,7 +81,7 @@
     "express-http-proxy": "^1.5.1",
     "mobx": "^5.9.4",
     "mobx-react": "^5.0.0",
-    "moment": "^2.22.2",
+    "moment": "^2.29.4",
     "mongoose": "^5.2.8",
     "mongoose-delete": "^0.4.0",
     "mongoose-type-email": "^1.0.10",
